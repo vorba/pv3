@@ -1,0 +1,210 @@
+﻿@using System.Web.UI.WebControls
+@model IEnumerable<Purevision.Models.Meeting>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Meetings</h2>
+
+@(Html.Kendo().TabStrip()
+    .Name("MeetingTabStrip")
+    .Items(items =>
+    {
+        items.Add()
+            .Text("Meetings")
+            .Selected(true)
+            .Content(@<text>
+                @RenderMeetingScheduler()
+            </text>)
+            .ContentHtmlAttributes(new { style = "min-height: 200px" });
+        items.Add()
+            .Text("HTML")
+            .Content(
+                @<text>
+                     @RenderMeetingTable()
+                 </text>)
+        .ContentHtmlAttributes(new { style = "min-height: 200px" });
+    })
+    .Events(e => e.Activate("tabActivate"))
+)
+
+@helper RenderMeetingTable() {
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Start)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.End)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RoomID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsAllDay)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.RecurrenceRule)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RecurrenceException)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StartTimezone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EndTimezone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Meeting1.Title)
+            </th>*@
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Start)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.End)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RoomID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsAllDay)
+                </td>
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.RecurrenceRule)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RecurrenceException)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartTimezone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndTimezone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Meeting1.Title)
+                </td>*@
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new {id = item.MeetingID}) |
+                    @Html.ActionLink("Details", "Details", new {id = item.MeetingID}) |
+                    @Html.ActionLink("Delete", "Delete", new {id = item.MeetingID})
+                </td>
+            </tr>
+        }
+    </table>
+}
+
+@helper RenderMeetingScheduler() {
+@(Html.Kendo().Scheduler<Purevision.Models.MeetingViewModel>()
+    .Name("MeetingSchedule")
+    .Date(new DateTime(2014, 12, 30))
+    .StartTime(new DateTime(2015, 12, 30, 7, 00, 00))
+    .Height(600)
+    .Views(views => {
+        views.DayView();
+        //views.WorkWeekView(workWeekView => workWeekView.Selected(true));
+        views.WeekView(weekView => weekView.Selected(true));
+        views.MonthView();
+        views.AgendaView();
+        //views.TimelineView();
+    })
+    .Editable(editable =>
+        {
+            editable.TemplateName("CustomEditorTemplate");
+        })
+    .Timezone("Etc/UTC")
+    .Resources(resource =>
+    {
+        resource.Add(m => m.RoomID)
+            .Title("Room")
+            .DataTextField("Text")
+            .DataValueField("Value")
+            .DataColorField("Color")
+            .BindTo(new[] { 
+                new { Text = "Meeting Room 101", Value = 1, Color = "#6eb3fa" },
+                new { Text = "Meeting Room 201", Value = 2, Color = "#f58a8a" } 
+            });
+        resource.Add(m => m.Attendees)
+            .Title("Attendees")
+            .Multiple(true)
+            .DataTextField("Text")
+            .DataValueField("Value")
+            .DataColorField("Color")
+            .BindTo(new[] { 
+                new { Text = "Alex", Value = 1, Color = "#f8a398" },
+                new { Text = "Bob", Value = 2, Color = "#51a0ed" },
+                new { Text = "Charlie", Value = 3, Color = "#56ca85" } 
+            });
+    })
+    .DataSource(d => d
+        .Model(m =>
+        {
+            m.Id(f => f.MeetingID);
+            m.Field(f => f.Title).DefaultValue("No title");
+            m.Field(f => f.RoomID).DefaultValue(1);
+            m.RecurrenceId(f => f.RecurrenceID);
+        })
+        .Events(e => e.Error("error_handler"))
+        .Create("Meeting_Create", "Meetings")
+        .Read("Meeting_Read", "Meetings")
+        .Update("Meeting_Update", "Meetings")
+        .Destroy("Meeting_Destroy", "Meetings")
+        .Filter(filters =>
+        {
+            filters.Add(model => model.RoomID).IsEqualTo(1).Or().IsEqualTo(2);
+        })
+    )
+)}
+
+<script type="text/javascript">
+    function error_handler(e) {
+        if (e.errors) {
+            var message = "Errors:\n";
+            $.each(e.errors, function (key, value) {
+                if ('errors' in value) {
+                    $.each(value.errors, function () {
+                        message += this + "\n";
+                    });
+                }
+            });
+            alert(message);
+
+            var scheduler = $("#scheduler").data("kendoScheduler");
+            scheduler.one("dataBinding", function (e) {
+                //prevent saving if server error is thrown
+                e.preventDefault();
+            })
+        }
+    }
+
+    function tabActivate(e) {
+//        $("#MeetingTabStrip").data("Scheduler").refresh();
+
+        var scheduler = $("#MeetingSchedule").data("kendoScheduler");
+        //scheduler.view(scheduler.view().name);
+        scheduler.refresh();
+    }
+</script>

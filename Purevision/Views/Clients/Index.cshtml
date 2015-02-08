@@ -1,0 +1,109 @@
+﻿@model IEnumerable<Purevision.Models.Client>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Clients</h2>
+
+@(Html.Kendo().TabStrip()
+    .Name("ClientViewTabStrip")
+    .Items(items =>
+    {
+        items.Add()
+            .Text("Clients")
+            .Selected(true)
+            .Content(
+                @<text>
+                     @ClientGrid()
+                 </text>)
+            .ContentHtmlAttributes(new { style = "min-height: 200px" });
+        items.Add()
+            .Text("HTML")
+            .Content(
+                @<text>
+                    @ClientView()
+                </text>)
+            .ContentHtmlAttributes(new { style = "min-height: 200px" });
+    })
+)
+
+@helper ClientView() {
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new {id = item.Id}) |
+                    @Html.ActionLink("Details", "Details", new {id = item.Id}) |
+                    @Html.ActionLink("Delete", "Delete", new {id = item.Id})
+                </td>
+            </tr>
+        }
+    </table>
+    }
+
+@helper ClientGrid()
+{
+    @(Html.Kendo().Grid<Purevision.Models.Client>()
+          .Name("grid")
+          .Columns(columns =>
+          {
+              columns.Bound(c => c.Name).Width(140);
+              columns.Command(command =>
+              {
+                  command.Edit();
+                  command.Destroy();
+              }).Width(172);
+          })
+          .ToolBar(toolbar => toolbar.Create())
+          //.HtmlAttributes(new { style = "height: 380px;" })
+          .Scrollable()
+          //.Groupable()
+          .Sortable()
+          .Editable(editable => editable.Mode(GridEditMode.InLine))
+          .Pageable(pageable => pageable
+              .Refresh(true)
+              .PageSizes(true)
+              .ButtonCount(5))
+          .DataSource(dataSource => dataSource
+              .Ajax()
+              .PageSize(20)
+              .Events(events => events.Error("error_handler"))
+              .Model(model => model.Id(c => c.Id))
+              .Create(create => create.Action("EditingInline_Create", "Clients"))
+              .Read(read => read.Action("Clients_Read", "Clients"))
+              .Update(update => update.Action("Update", "Clients"))
+              .Destroy(update => update.Action("EditingInline_Destroy", "Clients"))
+              )
+          )
+}
+
+<script type="text/javascript">
+        function error_handler(e) {
+            if (e.errors) {
+                var message = "Errors:\n";
+                $.each(e.errors, function (key, value) {
+                    if ('errors' in value) {
+                        $.each(value.errors, function () {
+                            message += this + "\n";
+                        });
+                    }
+                });
+                alert(message);
+            }
+        }
+</script>
