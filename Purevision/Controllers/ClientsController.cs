@@ -27,20 +27,23 @@ namespace Purevision.Controllers
         {
             //using (var purevision = new PurevisionEntities())
             //{
-                //IQueryable<Client> clients = db.Clients;
-                //// Convert the Client entities to ClientViewModel instances
-                //DataSourceResult result = clients.ToDataSourceResult(request, client => new ClientViewModel
-                //{
-                //    Id = client.Id,
-                //    Name = client.Name
-                //});
-                //return Json(result);
-            return Json(db.Clients.ToDataSourceResult(request, client => new ClientViewModel
-                {
-                    Id = client.Id,
-                    Name = client.Name
-                })
-            );
+            IQueryable<Client> clients = db.Clients;
+            // Convert the Client entities to ClientViewModel instances
+            DataSourceResult result = clients.ToDataSourceResult(request, client => new ClientViewModel
+            {
+                Id = client.Id,
+                Name = client.Name
+            });
+            return Json(result);
+
+            //return Json(db.Clients.ToDataSourceResult(
+            //    request, client => new ClientViewModel
+            //    {
+            //        Id = client.Id,
+            //        Name = client.Name
+            //    })
+            //);
+
                 //return Json(new[] { client }.ToDataSourceResult(request, ModelState));
             //}
         }
