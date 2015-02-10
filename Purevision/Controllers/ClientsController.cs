@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
 using Purevision.Models;
@@ -18,26 +19,38 @@ namespace Purevision.Controllers
         private PurevisionEntities db = new PurevisionEntities();
 
         private User _user;
+        private IQueryable<Client> _clients;
 
         public ClientsController ()
         {
             var userEmail = System.Web.HttpContext.Current.User.Identity.Name;
-            _user = db.Users.Single(user => user.Email == userEmail);
+            try
+            {
+                _user = db.Users.Single(user => user.Email == userEmail);
+                _clients = db.Clients.Where(client => client.UserId == _user.Id);
+
+            }
+            catch (Exception ex)
+            {
+                RedirectToRoute("Default", (RouteTable.Routes["Default"] as Route).Defaults);
+            }
         }
 
         // GET: Clients
         public async Task<ActionResult> Index()
         {
-            return View(await db.Clients.ToListAsync());
+            if (_user == null) return RedirectToRoute("Default", (RouteTable.Routes["Default"] as Route).Defaults);
+            return View(await _clients.ToListAsync());
         }
 
         public ActionResult Clients_Read([DataSourceRequest] DataSourceRequest request)
         {
+            if (_user == null) RedirectToRoute("Default", (RouteTable.Routes["Default"] as Route).Defaults);
             //using (var purevision = new PurevisionEntities())
             //{
-            IQueryable<Client> clients = db.Clients.Where(client => client.UserId == _user.Id);
+            //IQueryable<Client> clients = db.Clients.Where(client => client.UserId == _user.Id);
             // Convert the Client entities to ClientViewModel instances
-            DataSourceResult result = clients.ToDataSourceResult(request, client => new ClientViewModel
+            DataSourceResult result = _clients.ToDataSourceResult(request, client => new ClientViewModel
             {
                 Id = client.Id,
                 Name = client.Name
