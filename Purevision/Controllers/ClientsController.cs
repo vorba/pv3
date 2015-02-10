@@ -17,6 +17,14 @@ namespace Purevision.Controllers
     {
         private PurevisionEntities db = new PurevisionEntities();
 
+        private User _user;
+
+        public ClientsController ()
+        {
+            var userEmail = System.Web.HttpContext.Current.User.Identity.Name;
+            _user = db.Users.Single(user => user.Email == userEmail);
+        }
+
         // GET: Clients
         public async Task<ActionResult> Index()
         {
@@ -27,7 +35,7 @@ namespace Purevision.Controllers
         {
             //using (var purevision = new PurevisionEntities())
             //{
-            IQueryable<Client> clients = db.Clients;
+            IQueryable<Client> clients = db.Clients.Where(client => client.UserId == _user.Id);
             // Convert the Client entities to ClientViewModel instances
             DataSourceResult result = clients.ToDataSourceResult(request, client => new ClientViewModel
             {
@@ -78,6 +86,7 @@ namespace Purevision.Controllers
         {
             if (ModelState.IsValid)
             {
+                client.UserId = _user.Id;
                 db.Clients.Add(client);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
@@ -91,6 +100,7 @@ namespace Purevision.Controllers
         {
             if (client != null && ModelState.IsValid)
             {
+                client.UserId = _user.Id;
                 //productService.Create(client);
                 db.Clients.Add(client);
                 db.SaveChanges();

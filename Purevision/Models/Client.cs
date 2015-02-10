@@ -16,5 +16,6 @@ namespace Purevision.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public Nullable<int> UserId { get; set; }
     }
 }
