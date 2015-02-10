@@ -7,6 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Purevision", "Purevision\Pu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PurevisionTests", "PurevisionTests\PurevisionTests.csproj", "{0C40696B-F01B-4B36-A5E7-35581D1A8D20}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{09CB4F9B-AFF9-4DEE-B879-DB47E92FC6BF}"
+	ProjectSection(SolutionItems) = preProject
+		~README.txt = ~README.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
