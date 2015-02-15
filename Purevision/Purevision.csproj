@@ -173,10 +173,6 @@
     <Compile Include="Migrations\201502130405104_Initial.Designer.cs">
       <DependentUpon>201502130405104_Initial.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201502130413070_RemoveClientName.cs" />
-    <Compile Include="Migrations\201502130413070_RemoveClientName.Designer.cs">
-      <DependentUpon>201502130413070_RemoveClientName.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\201502131511138_ClientAddEmailComment.cs" />
     <Compile Include="Migrations\201502131511138_ClientAddEmailComment.Designer.cs">
       <DependentUpon>201502131511138_ClientAddEmailComment.cs</DependentUpon>
@@ -389,9 +385,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201502130405104_Initial.resx">
       <DependentUpon>201502130405104_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201502130413070_RemoveClientName.resx">
-      <DependentUpon>201502130413070_RemoveClientName.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201502131511138_ClientAddEmailComment.resx">
       <DependentUpon>201502131511138_ClientAddEmailComment.cs</DependentUpon>
