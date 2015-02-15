@@ -59,7 +59,6 @@ namespace Purevision.Controllers
                 Email = client.Email,
                 Comments = client.Comments,
                 UserId = client.UserId
-
             });
             return Json(result);
 
