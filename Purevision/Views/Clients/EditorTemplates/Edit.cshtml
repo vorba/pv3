@@ -1,0 +1,132 @@
+﻿@model Purevision.Models.Person
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        @*<h4>Client</h4>*@
+        <h2 class="col-md-offset-1">Client</h2>
+        <hr />
+        @Html.ValidationSummary(true)
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.FirstName)
+                @Html.ValidationMessageFor(model => model.FirstName)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.LastName)
+                @Html.ValidationMessageFor(model => model.LastName)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-4">
+                @*@Html.EditorFor(model => model.Phone)*@
+                @(Html.Kendo().MaskedTextBoxFor(m => m.Phone)
+                    .Name("Phone")
+                    .Mask("(000) 000-0000")
+                    //.Value()
+                    )
+                @*@Html.TextBoxFor(model => model.Phone, new { @class = "k-textbox", placeholder = Html.DisplayNameFor(model => model.Phone) })*@
+                @Html.ValidationMessageFor(model => model.Phone)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.Email)
+                @Html.ValidationMessageFor(model => model.Email)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Comments, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-4">
+@*                @Html.TextAreaFor(model => model.Comments, htmlAttributes: new { style = "background-color: red;" })*@
+@*                @Html.TextAreaFor(model => model.Comments, htmlAttributes: new { @class = "form-control", placeholder = Html.DisplayNameFor(model => model.Comments) })*@
+                @Html.EditorFor(model => model.Comments)
+                @Html.ValidationMessageFor(model => model.Comments)
+            </div>
+        </div>
+
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.UserId, htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="input-group col-md-4">
+                <div class="input-group col-md-4">
+                    @Html.EditorFor(model => model.UserId)
+                </div>
+                @Html.ValidationMessageFor(model => model.UserId)
+            </div>
+        </div>*@
+
+        @*<div>
+            @(Html.Kendo().NumericTextBox<double>()
+            .Name("percentage")
+            .Format("p0")
+            .Min(0)
+            .Max(0.9)
+            .Step(0.01)
+            .Value(0.05)
+            )
+        </div>
+
+        <div>
+            @(Html.Kendo().NumericTextBoxFor(m => m.UserId)
+                .Placeholder("Item Counts")
+                .Format("# Item(s)")
+                .Min(0)
+            )
+        </div>*@
+
+        @*<div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>*@
+    </div>
+}
+
+@*<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>*@
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+@section styles {
+    <style type="text/css">
+        .test
+        {
+            background-color: red;
+            /*col-md-4*/
+            width: 600px;
+        }
+    </style>
+}
+
+<script type="text/javascript">
+    //(function ($) {
+    //    $('.spinner .btn:first-of-type').on('click', function () {
+    //        $('.spinner input').val(parseInt($('.spinner input').val(), 10) + 1);
+    //    });
+    //    $('.spinner .btn:last-of-type').on('click', function () {
+    //        $('.spinner input').val(parseInt($('.spinner input').val(), 10) - 1);
+    //    });
+    //})(jQuery);
+
+</script>
