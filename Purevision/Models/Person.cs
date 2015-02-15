@@ -29,11 +29,13 @@ namespace Purevision.Models
         public string LastName { get; set; }
 
         [Required]
-        [StringLength(10)]
+        [StringLength(100)]
         [Display(Prompt = "Email")]
         [DataType("EmailAddress")]
         public string Email { get; set; }
 
+        [Required]
+        [StringLength(14)]
         [Display(Prompt = "Phone")]
         //[DataType(DataType.PhoneNumber)]
         //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:###-###-####}")]

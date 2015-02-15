@@ -181,6 +181,10 @@
     <Compile Include="Migrations\201502132319571_PersonPhoneAdd.Designer.cs">
       <DependentUpon>201502132319571_PersonPhoneAdd.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201502152210138_UpdatePersonEmailAndPhoneLength.cs" />
+    <Compile Include="Migrations\201502152210138_UpdatePersonEmailAndPhoneLength.Designer.cs">
+      <DependentUpon>201502152210138_UpdatePersonEmailAndPhoneLength.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AspNetRole.cs">
@@ -391,6 +395,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201502132319571_PersonPhoneAdd.resx">
       <DependentUpon>201502132319571_PersonPhoneAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502152210138_UpdatePersonEmailAndPhoneLength.resx">
+      <DependentUpon>201502152210138_UpdatePersonEmailAndPhoneLength.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
