@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Purevision.Models.Client>
+﻿@model IEnumerable<Purevision.Models.Person>
 
 @{
     ViewBag.Title = "Index";
@@ -35,7 +35,10 @@
     <table class="table">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
             </th>
             <th></th>
         </tr>
@@ -44,7 +47,10 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Name)
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new {id = item.Id}) |
@@ -58,11 +64,16 @@
 
 @helper ClientGrid()
 {
-    @(Html.Kendo().Grid<Purevision.Models.Client>()
+    @(Html.Kendo().Grid<Purevision.Models.Person>()
           .Name("grid")
           .Columns(columns =>
           {
-              columns.Bound(c => c.Name).Width(140);
+              columns.Bound(c => c.FirstName).Width(140);
+              columns.Bound(c => c.LastName).Width(140);
+              columns.Bound(c => c.Email).Width(140);
+              columns.Bound(c => c.Phone).Width(140);
+              columns.Bound(c => c.Comments).Hidden().Width(140);
+              columns.Bound(c => c.UserId).Hidden();
               columns.Command(command =>
               {
                   command.Edit();
@@ -74,7 +85,7 @@
           .Scrollable()
           //.Groupable()
           .Sortable()
-          .Editable(editable => editable.Mode(GridEditMode.InLine))
+          .Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("Edit"))
           .Pageable(pageable => pageable
               .Refresh(true)
               .PageSizes(true)

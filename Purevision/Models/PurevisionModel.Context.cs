@@ -25,7 +25,7 @@ namespace Purevision.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Client> Clients { get; set; }
+        public virtual DbSet<People> People { get; set; }
         public virtual DbSet<MeetingAttendee> MeetingAttendees { get; set; }
         public virtual DbSet<Meeting> Meetings { get; set; }
         public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
@@ -34,5 +34,12 @@ namespace Purevision.Models
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<Task> Tasks { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Business> Businesses { get; set; }
+        public virtual DbSet<BusinessProfile> BusinessProfiles { get; set; }
+        public virtual DbSet<PersonalProfile> PersonalProfiles { get; set; }
+        public virtual DbSet<List> Lists { get; set; }
+        public virtual DbSet<ProfileProperty> ProfileProperties { get; set; }
+        public virtual DbSet<UserProfile> UserProfiles { get; set; }
+        public virtual DbSet<Organization> Organizations { get; set; }
     }
 }

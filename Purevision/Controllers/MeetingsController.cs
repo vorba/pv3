@@ -15,7 +15,7 @@ namespace Purevision.Controllers
 {
     public class MeetingsController : Controller
     {
-        private PurevisionEntities db = new PurevisionEntities();
+        private PurevisionModel2 db = new PurevisionModel2();
         private SchedulerMeetingService meetingService;
 
 

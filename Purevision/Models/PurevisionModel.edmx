@@ -4,241 +4,513 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="PurevisionModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="AspNetRoles">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="256" Nullable="false" />
-        </EntityType>
-        <EntityType Name="AspNetUserClaims">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="ClaimType" Type="nvarchar(max)" />
-          <Property Name="ClaimValue" Type="nvarchar(max)" />
-        </EntityType>
-        <EntityType Name="AspNetUserLogins">
-          <Key>
-            <PropertyRef Name="LoginProvider" />
-            <PropertyRef Name="ProviderKey" />
-            <PropertyRef Name="UserId" />
-          </Key>
-          <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
-        </EntityType>
-        <EntityType Name="AspNetUserRoles">
-          <Key>
-            <PropertyRef Name="UserId" />
-            <PropertyRef Name="RoleId" />
-          </Key>
-          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="RoleId" Type="nvarchar" MaxLength="128" Nullable="false" />
-        </EntityType>
-        <EntityType Name="AspNetUsers">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="Email" Type="nvarchar" MaxLength="256" />
-          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
-          <Property Name="PasswordHash" Type="nvarchar(max)" />
-          <Property Name="SecurityStamp" Type="nvarchar(max)" />
-          <Property Name="PhoneNumber" Type="nvarchar(max)" />
-          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
-          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
-          <Property Name="LockoutEndDateUtc" Type="datetime" />
-          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
-          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
-          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Clients">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nchar" MaxLength="10" />
-          <Property Name="UserId" Type="int" />
-        </EntityType>
-        <EntityType Name="MeetingAttendees">
-          <Key>
-            <PropertyRef Name="MeetingID" />
-            <PropertyRef Name="AttendeeID" />
-          </Key>
-          <Property Name="MeetingID" Type="int" Nullable="false" />
-          <Property Name="AttendeeID" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Meetings">
-          <Key>
-            <PropertyRef Name="MeetingID" />
-          </Key>
-          <Property Name="MeetingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Start" Type="datetime" Nullable="false" />
-          <Property Name="End" Type="datetime" Nullable="false" />
-          <Property Name="Title" Type="ntext" Nullable="false" />
-          <Property Name="Description" Type="ntext" />
-          <Property Name="RoomID" Type="int" />
-          <Property Name="IsAllDay" Type="bit" Nullable="false" />
-          <Property Name="RecurrenceRule" Type="ntext" />
-          <Property Name="RecurrenceID" Type="int" />
-          <Property Name="RecurrenceException" Type="ntext" />
-          <Property Name="StartTimezone" Type="ntext" />
-          <Property Name="EndTimezone" Type="ntext" />
-        </EntityType>
-        <EntityType Name="Tasks">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Users">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="AspNetUserId" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
-          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
-          <Property Name="DisplayName" Type="nvarchar" MaxLength="256" Nullable="false" />
-          <Property Name="Email" Type="nvarchar" MaxLength="256" Nullable="false" />
-          <Property Name="CreatedByUserId" Type="int" Nullable="false" />
-          <Property Name="CreatedOnDate" Type="datetime" Nullable="false" />
-          <Property Name="LastModifiedByUserId" Type="int" />
-          <Property Name="LastModifiedOnDate" Type="datetime" />
-          <Property Name="IsAdmin" Type="bit" Nullable="false" />
-          <Property Name="IsDeleted" Type="bit" Nullable="false" />
-        </EntityType>
-        <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="AspNetUserClaims" Type="Self.AspNetUserClaims" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetUserClaims">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="AspNetUserLogins" Type="Self.AspNetUserLogins" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetUserLogins">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
-          <End Role="AspNetRoles" Type="Self.AspNetRoles" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetRoles">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetUserRoles">
-              <PropertyRef Name="RoleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="AspNetUserRoles" Type="Self.AspNetUserRoles" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUsers">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetUserRoles">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_MeetingAttendee_Meeting">
-          <End Role="Meetings" Type="Self.Meetings" Multiplicity="1" />
-          <End Role="MeetingAttendees" Type="Self.MeetingAttendees" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Meetings">
-              <PropertyRef Name="MeetingID" />
-            </Principal>
-            <Dependent Role="MeetingAttendees">
-              <PropertyRef Name="MeetingID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Meetings_Meetings">
-          <End Role="Meetings" Type="Self.Meetings" Multiplicity="0..1" />
-          <End Role="Meetings1" Type="Self.Meetings" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Meetings">
-              <PropertyRef Name="MeetingID" />
-            </Principal>
-            <Dependent Role="Meetings1">
-              <PropertyRef Name="RecurrenceID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityContainer Name="PurevisionModelStoreContainer">
-          <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Clients" EntityType="Self.Clients" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="MeetingAttendees" EntityType="Self.MeetingAttendees" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Meetings" EntityType="Self.Meetings" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Tasks" EntityType="Self.Tasks" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserLogins" EntitySet="AspNetUserLogins" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetRoles_RoleId">
-            <End Role="AspNetRoles" EntitySet="AspNetRoles" />
-            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-            <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_MeetingAttendee_Meeting" Association="Self.FK_MeetingAttendee_Meeting">
-            <End Role="Meetings" EntitySet="Meetings" />
-            <End Role="MeetingAttendees" EntitySet="MeetingAttendees" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Meetings_Meetings" Association="Self.FK_Meetings_Meetings">
-            <End Role="Meetings" EntitySet="Meetings" />
-            <End Role="Meetings1" EntitySet="Meetings" />
-          </AssociationSet>
-        </EntityContainer>
-      </Schema></edmx:StorageModels>
+    <Schema Namespace="PurevisionModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="PurevisionModelStoreContainer">
+    <EntitySet Name="Clients" EntityType="PurevisionModel.Store.Clients" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="MeetingAttendees" EntityType="PurevisionModel.Store.MeetingAttendees" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Meetings" EntityType="PurevisionModel.Store.Meetings" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="AspNetRoles" EntityType="PurevisionModel.Store.AspNetRoles" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="AspNetUserClaims" EntityType="PurevisionModel.Store.AspNetUserClaims" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="AspNetUserLogins" EntityType="PurevisionModel.Store.AspNetUserLogins" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="AspNetUsers" EntityType="PurevisionModel.Store.AspNetUsers" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Tasks" EntityType="PurevisionModel.Store.Tasks" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Users" EntityType="PurevisionModel.Store.Users" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Businesses" EntityType="PurevisionModel.Store.Businesses" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="BusinessProfiles" EntityType="PurevisionModel.Store.BusinessProfiles" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ClientProfiles" EntityType="PurevisionModel.Store.ClientProfiles" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Lists" EntityType="PurevisionModel.Store.Lists" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProfileProperties" EntityType="PurevisionModel.Store.ProfileProperties" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserProfiles" EntityType="PurevisionModel.Store.UserProfiles" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Organizations" EntityType="PurevisionModel.Store.Organizations" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="AspNetUserRoles" EntityType="PurevisionModel.Store.AspNetUserRoles" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_MeetingAttendee_Meeting" Association="PurevisionModel.Store.FK_MeetingAttendee_Meeting">
+      <End Role="Meetings" EntitySet="Meetings" />
+      <End Role="MeetingAttendees" EntitySet="MeetingAttendees" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Meetings_Meetings" Association="PurevisionModel.Store.FK_Meetings_Meetings">
+      <End Role="Meetings" EntitySet="Meetings" />
+      <End Role="Meetings1" EntitySet="Meetings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="PurevisionModel.Store.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserClaim" EntitySet="AspNetUserClaims" />
+    </AssociationSet>
+    <AssociationSet Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" Association="PurevisionModel.Store.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserLogin" EntitySet="AspNetUserLogins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AspNetUserRoles_AspNetRole" Association="PurevisionModel.Store.FK_AspNetUserRoles_AspNetRole">
+      <End Role="AspNetRole" EntitySet="AspNetRoles" />
+      <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AspNetUserRoles_AspNetUser" Association="PurevisionModel.Store.FK_AspNetUserRoles_AspNetUser">
+      <End Role="AspNetUser" EntitySet="AspNetUsers" />
+      <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BusinessProfiles_Businesses" Association="PurevisionModel.Store.FK_BusinessProfiles_Businesses">
+      <End Role="Business" EntitySet="Businesses" />
+      <End Role="BusinessProfile" EntitySet="BusinessProfiles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BusinessProfiles_ProfileProperties" Association="PurevisionModel.Store.FK_BusinessProfiles_ProfileProperties">
+      <End Role="ProfileProperty" EntitySet="ProfileProperties" />
+      <End Role="BusinessProfile" EntitySet="BusinessProfiles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ClientProfiles_Clients" Association="PurevisionModel.Store.FK_ClientProfiles_Clients">
+      <End Role="Client" EntitySet="Clients" />
+      <End Role="ClientProfile" EntitySet="ClientProfiles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ClientProfiles_ProfileProperties" Association="PurevisionModel.Store.FK_ClientProfiles_ProfileProperties">
+      <End Role="ProfileProperty" EntitySet="ProfileProperties" />
+      <End Role="ClientProfile" EntitySet="ClientProfiles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserProfiles_ProfileProperties" Association="PurevisionModel.Store.FK_UserProfiles_ProfileProperties">
+      <End Role="ProfileProperty" EntitySet="ProfileProperties" />
+      <End Role="UserProfile" EntitySet="UserProfiles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserProfiles_Users" Association="PurevisionModel.Store.FK_UserProfiles_Users">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserProfile" EntitySet="UserProfiles" />
+    </AssociationSet>
+    <AssociationSet Name="ClientUser" Association="PurevisionModel.Store.ClientUser">
+      <End Role="Client" EntitySet="Clients" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="CompanyClient" Association="PurevisionModel.Store.CompanyClient">
+      <End Role="Company" EntitySet="Organizations" />
+      <End Role="Client" EntitySet="Clients" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Clients">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nchar" Nullable="true" MaxLength="10" />
+    <Property Name="UserId" Type="int" Nullable="true" />
+    <Property Name="CompanyId" Type="int" Nullable="false" />
+    <Property Name="User_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MeetingAttendees">
+    <Key>
+      <PropertyRef Name="MeetingID" />
+      <PropertyRef Name="AttendeeID" />
+    </Key>
+    <Property Name="MeetingID" Type="int" Nullable="false" />
+    <Property Name="AttendeeID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Meetings">
+    <Key>
+      <PropertyRef Name="MeetingID" />
+    </Key>
+    <Property Name="MeetingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Start" Type="datetime" Nullable="false" />
+    <Property Name="End" Type="datetime" Nullable="false" />
+    <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="RoomID" Type="int" Nullable="true" />
+    <Property Name="IsAllDay" Type="bit" Nullable="false" />
+    <Property Name="RecurrenceRule" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="RecurrenceID" Type="int" Nullable="true" />
+    <Property Name="RecurrenceException" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="StartTimezone" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="EndTimezone" Type="nvarchar(max)" Nullable="true" />
+  </EntityType>
+  <EntityType Name="AspNetRoles">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="256" />
+  </EntityType>
+  <EntityType Name="AspNetUserClaims">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="ClaimType" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="ClaimValue" Type="nvarchar(max)" Nullable="true" />
+  </EntityType>
+  <EntityType Name="AspNetUserLogins">
+    <Key>
+      <PropertyRef Name="LoginProvider" />
+      <PropertyRef Name="ProviderKey" />
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="LoginProvider" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="ProviderKey" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="UserId" Type="nvarchar" Nullable="false" MaxLength="128" />
+  </EntityType>
+  <EntityType Name="AspNetUsers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="Email" Type="nvarchar" Nullable="true" MaxLength="256" />
+    <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+    <Property Name="PasswordHash" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="SecurityStamp" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="PhoneNumber" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+    <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+    <Property Name="LockoutEndDateUtc" Type="datetime" Nullable="true" />
+    <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" Nullable="false" MaxLength="256" />
+  </EntityType>
+  <EntityType Name="Tasks">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AspNetUserId" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="FirstName" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="LastName" Type="nvarchar" Nullable="true" MaxLength="50" />
+    <Property Name="DisplayName" Type="nvarchar" Nullable="false" MaxLength="256" />
+    <Property Name="Email" Type="nvarchar" Nullable="false" MaxLength="256" />
+    <Property Name="CreatedByUserId" Type="int" Nullable="false" />
+    <Property Name="CreatedOnDate" Type="datetime" Nullable="false" />
+    <Property Name="LastModifiedByUserId" Type="int" Nullable="true" />
+    <Property Name="LastModifiedOnDate" Type="datetime" Nullable="true" />
+    <Property Name="IsAdmin" Type="bit" Nullable="false" />
+    <Property Name="IsDeleted" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Businesses">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PrincipleOwnerUserId" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Number" Type="nchar" Nullable="true" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="BusinessProfiles">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BusinessId" Type="int" Nullable="false" />
+    <Property Name="PropertyId" Type="int" Nullable="false" />
+    <Property Name="PropertyValue" Type="nvarchar" Nullable="true" MaxLength="3750" />
+    <Property Name="PropertyText" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Visibility" Type="int" Nullable="false" />
+    <Property Name="CreatedOnDate" Type="datetime" Nullable="false" />
+    <Property Name="CreatedByUserId" Type="int" Nullable="false" />
+    <Property Name="UpdatedOnDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedByUserId" Type="int" Nullable="false" />
+    <Property Name="ArchivedOnDate" Type="datetime" Nullable="false" />
+    <Property Name="ArchivedByUserId" Type="int" Nullable="false" />
+    <Property Name="ExtendedVisibility" Type="varchar" Nullable="true" MaxLength="400" />
+  </EntityType>
+  <EntityType Name="ClientProfiles">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ClientId" Type="int" Nullable="false" />
+    <Property Name="PropertyId" Type="int" Nullable="false" />
+    <Property Name="PropertyValue" Type="nvarchar" Nullable="true" MaxLength="3750" />
+    <Property Name="PropertyText" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Visibility" Type="int" Nullable="false" />
+    <Property Name="CreatedOnDate" Type="datetime" Nullable="false" />
+    <Property Name="CreatedByUserId" Type="int" Nullable="false" />
+    <Property Name="UpdatedOnDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedByUserId" Type="int" Nullable="false" />
+    <Property Name="ArchivedOnDate" Type="datetime" Nullable="false" />
+    <Property Name="ArchivedByUserId" Type="int" Nullable="false" />
+    <Property Name="ExtendedVisibility" Type="varchar" Nullable="true" MaxLength="400" />
+  </EntityType>
+  <EntityType Name="Lists">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Value" Type="nvarchar" Nullable="false" MaxLength="100" />
+    <Property Name="Text" Type="nvarchar" Nullable="false" MaxLength="150" />
+    <Property Name="ParentId" Type="int" Nullable="false" />
+    <Property Name="Level" Type="int" Nullable="false" />
+    <Property Name="SortOrder" Type="int" Nullable="false" />
+    <Property Name="DefinitionId" Type="int" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" Nullable="true" MaxLength="500" />
+    <Property Name="IsSystem" Type="bit" Nullable="false" />
+    <Property Name="CreatedOnDate" Type="datetime" Nullable="true" />
+    <Property Name="CreatedByUserId" Type="int" Nullable="true" />
+    <Property Name="UpdatedOnDate" Type="datetime" Nullable="true" />
+    <Property Name="UpdatedByUserId" Type="int" Nullable="true" />
+    <Property Name="ArchivedOnDate" Type="datetime" Nullable="true" />
+    <Property Name="ArchivedByUserId" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="ProfileProperties">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DataType" Type="int" Nullable="false" />
+    <Property Name="Default" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Category" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="Length" Type="int" Nullable="false" />
+    <Property Name="Required" Type="bit" Nullable="false" />
+    <Property Name="Validation" Type="nvarchar" Nullable="true" MaxLength="2000" />
+    <Property Name="Order" Type="int" Nullable="false" />
+    <Property Name="Visible" Type="bit" Nullable="false" />
+    <Property Name="CreatedOnDate" Type="datetime" Nullable="true" />
+    <Property Name="CreatedByUserID" Type="int" Nullable="true" />
+    <Property Name="UpdatedOnDate" Type="datetime" Nullable="true" />
+    <Property Name="UpdatedByUserID" Type="int" Nullable="true" />
+    <Property Name="ArchivedOnDate" Type="datetime" Nullable="true" />
+    <Property Name="ArchivedByUserID" Type="int" Nullable="true" />
+    <Property Name="DefaultVisibility" Type="int" Nullable="true" />
+    <Property Name="ReadOnly" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserProfiles">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="PropertyId" Type="int" Nullable="false" />
+    <Property Name="PropertyValue" Type="nvarchar" Nullable="true" MaxLength="3750" />
+    <Property Name="PropertyText" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Visibility" Type="int" Nullable="false" />
+    <Property Name="CreatedOnDate" Type="datetime" Nullable="false" />
+    <Property Name="CreatedByUserId" Type="int" Nullable="false" />
+    <Property Name="UpdatedOnDate" Type="datetime" Nullable="false" />
+    <Property Name="UpdatedByUserId" Type="int" Nullable="false" />
+    <Property Name="ArchivedOnDate" Type="datetime" Nullable="false" />
+    <Property Name="ArchivedByUserId" Type="int" Nullable="false" />
+    <Property Name="ExtendedVisibility" Type="varchar" Nullable="true" MaxLength="400" />
+  </EntityType>
+  <EntityType Name="Organizations">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="ParentId" Type="int" Nullable="true" />
+    <Property Name="ClientId" Type="int" Nullable="true" />
+    <Property Name="BusinessId" Type="int" Nullable="true" />
+    <Property Name="SortOrder" Type="int" Nullable="true" />
+    <Property Name="Level" Type="int" Nullable="true" />
+    <Property Name="CreatedOnDate" Type="datetime" Nullable="true" />
+    <Property Name="CreatedByUserId" Type="int" Nullable="true" />
+    <Property Name="UpdatedOnDate" Type="datetime" Nullable="true" />
+    <Property Name="UpdatedByUserId" Type="int" Nullable="true" />
+    <Property Name="ArchivedOnDate" Type="datetime" Nullable="true" />
+    <Property Name="ArchivedByUserId" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="AspNetUserRoles">
+    <Key>
+      <PropertyRef Name="AspNetRoles_Id" />
+      <PropertyRef Name="AspNetUsers_Id" />
+    </Key>
+    <Property Name="AspNetRoles_Id" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="AspNetUsers_Id" Type="nvarchar" Nullable="false" MaxLength="128" />
+  </EntityType>
+  <Association Name="FK_MeetingAttendee_Meeting">
+    <End Role="Meetings" Type="PurevisionModel.Store.Meetings" Multiplicity="1" />
+    <End Role="MeetingAttendees" Type="PurevisionModel.Store.MeetingAttendees" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Meetings">
+        <PropertyRef Name="MeetingID" />
+      </Principal>
+      <Dependent Role="MeetingAttendees">
+        <PropertyRef Name="MeetingID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Meetings_Meetings">
+    <End Role="Meetings" Type="PurevisionModel.Store.Meetings" Multiplicity="0..1" />
+    <End Role="Meetings1" Type="PurevisionModel.Store.Meetings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Meetings">
+        <PropertyRef Name="MeetingID" />
+      </Principal>
+      <Dependent Role="Meetings1">
+        <PropertyRef Name="RecurrenceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUser" Type="PurevisionModel.Store.AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserClaim" Type="PurevisionModel.Store.AspNetUserClaims" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserClaim">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId">
+    <End Role="AspNetUser" Type="PurevisionModel.Store.AspNetUsers" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="AspNetUserLogin" Type="PurevisionModel.Store.AspNetUserLogins" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserLogin">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BusinessProfiles_Businesses">
+    <End Role="Business" Type="PurevisionModel.Store.Businesses" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="BusinessProfile" Type="PurevisionModel.Store.BusinessProfiles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Business">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BusinessProfile">
+        <PropertyRef Name="BusinessId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BusinessProfiles_ProfileProperties">
+    <End Role="ProfileProperty" Type="PurevisionModel.Store.ProfileProperties" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="BusinessProfile" Type="PurevisionModel.Store.BusinessProfiles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProfileProperty">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BusinessProfile">
+        <PropertyRef Name="PropertyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ClientProfiles_Clients">
+    <End Role="Client" Type="PurevisionModel.Store.Clients" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ClientProfile" Type="PurevisionModel.Store.ClientProfiles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Client">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ClientProfile">
+        <PropertyRef Name="ClientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ClientProfiles_ProfileProperties">
+    <End Role="ProfileProperty" Type="PurevisionModel.Store.ProfileProperties" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ClientProfile" Type="PurevisionModel.Store.ClientProfiles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProfileProperty">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ClientProfile">
+        <PropertyRef Name="PropertyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserProfiles_ProfileProperties">
+    <End Role="ProfileProperty" Type="PurevisionModel.Store.ProfileProperties" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="UserProfile" Type="PurevisionModel.Store.UserProfiles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ProfileProperty">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserProfile">
+        <PropertyRef Name="PropertyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserProfiles_Users">
+    <End Role="User" Type="PurevisionModel.Store.Users" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="UserProfile" Type="PurevisionModel.Store.UserProfiles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserProfile">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ClientUser">
+    <End Role="Client" Type="PurevisionModel.Store.Clients" Multiplicity="*" />
+    <End Role="User" Type="PurevisionModel.Store.Users" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Client">
+        <PropertyRef Name="User_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CompanyClient">
+    <End Role="Company" Type="PurevisionModel.Store.Organizations" Multiplicity="1" />
+    <End Role="Client" Type="PurevisionModel.Store.Clients" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Client">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AspNetUserRoles_AspNetRole">
+    <End Role="AspNetRole" Type="PurevisionModel.Store.AspNetRoles" Multiplicity="1" />
+    <End Role="AspNetUserRoles" Type="PurevisionModel.Store.AspNetUserRoles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetRole">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserRoles">
+        <PropertyRef Name="AspNetRoles_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AspNetUserRoles_AspNetUser">
+    <End Role="AspNetUserRoles" Type="PurevisionModel.Store.AspNetUserRoles" Multiplicity="*" />
+    <End Role="AspNetUser" Type="PurevisionModel.Store.AspNetUsers" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUser">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AspNetUserRoles">
+        <PropertyRef Name="AspNetUsers_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="PurevisionModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Client">
+        <EntityType Name="People">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="UserId" Type="Int32" />
+          <NavigationProperty Name="PersonalProfiles" Relationship="PurevisionModel.FK_PersonalProfiles_People" FromRole="People" ToRole="PersonalProfile" />
+          <NavigationProperty Name="Organization" Relationship="PurevisionModel.OrganizationPeople" FromRole="People" ToRole="Organization" />
+          <Property Name="OrganizationId" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="MeetingAttendee">
           <Key>
@@ -294,7 +566,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="PurevisionEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Clients" EntityType="Self.Client" />
+          <EntitySet Name="People" EntityType="PurevisionModel.People" />
           <EntitySet Name="MeetingAttendees" EntityType="Self.MeetingAttendee" />
           <EntitySet Name="Meetings" EntityType="Self.Meeting" />
           <AssociationSet Name="FK_MeetingAttendee_Meeting" Association="Self.FK_MeetingAttendee_Meeting">
@@ -323,6 +595,49 @@
           </AssociationSet>
           <EntitySet Name="Tasks" EntityType="PurevisionModel.Task" />
           <EntitySet Name="Users" EntityType="PurevisionModel.User" />
+          <EntitySet Name="Businesses" EntityType="PurevisionModel.Business" />
+          <EntitySet Name="BusinessProfiles" EntityType="PurevisionModel.BusinessProfile" />
+          <EntitySet Name="PersonalProfiles" EntityType="PurevisionModel.PersonalProfile" />
+          <EntitySet Name="Lists" EntityType="PurevisionModel.List" />
+          <EntitySet Name="ProfileProperties" EntityType="PurevisionModel.ProfileProperty" />
+          <EntitySet Name="UserProfiles" EntityType="PurevisionModel.UserProfile" />
+          <AssociationSet Name="FK_BusinessProfiles_Businesses" Association="PurevisionModel.FK_BusinessProfiles_Businesses">
+            <End Role="Business" EntitySet="Businesses" />
+            <End Role="BusinessProfile" EntitySet="BusinessProfiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BusinessProfiles_ProfileProperties" Association="PurevisionModel.FK_BusinessProfiles_ProfileProperties">
+            <End Role="ProfileProperty" EntitySet="ProfileProperties" />
+            <End Role="BusinessProfile" EntitySet="BusinessProfiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonalProfiles_People" Association="PurevisionModel.FK_PersonalProfiles_People">
+            <End Role="People" EntitySet="People" />
+            <End Role="PersonalProfile" EntitySet="PersonalProfiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientProfiles_ProfileProperties" Association="PurevisionModel.FK_ClientProfiles_ProfileProperties">
+            <End Role="ProfileProperty" EntitySet="ProfileProperties" />
+            <End Role="ClientProfile" EntitySet="PersonalProfiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserProfiles_ProfileProperties" Association="PurevisionModel.FK_UserProfiles_ProfileProperties">
+            <End Role="ProfileProperty" EntitySet="ProfileProperties" />
+            <End Role="UserProfile" EntitySet="UserProfiles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserProfiles_Users" Association="PurevisionModel.FK_UserProfiles_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserProfile" EntitySet="UserProfiles" />
+          </AssociationSet>
+          <EntitySet Name="Organizations" EntityType="PurevisionModel.Organization" />
+          <AssociationSet Name="OrganizationPeople" Association="PurevisionModel.OrganizationPeople">
+            <End Role="Organization" EntitySet="Organizations" />
+            <End Role="People" EntitySet="People" />
+          </AssociationSet>
+          <AssociationSet Name="BusinessOrganization" Association="PurevisionModel.BusinessOrganization">
+            <End Role="Business" EntitySet="Businesses" />
+            <End Role="Organization" EntitySet="Organizations" />
+          </AssociationSet>
+          <AssociationSet Name="ListList" Association="PurevisionModel.ListList">
+            <End Role="List" EntitySet="Lists" />
+            <End Role="List1" EntitySet="Lists" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="AspNetRole">
           <Key>
@@ -427,129 +742,520 @@
           <Property Name="LastModifiedOnDate" Type="DateTime" Precision="3" />
           <Property Name="IsAdmin" Type="Boolean" Nullable="false" />
           <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="UserProfiles" Relationship="PurevisionModel.FK_UserProfiles_Users" FromRole="User" ToRole="UserProfile" />
         </EntityType>
+        <EntityType Name="Business">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PrincipleOwnerUserId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Number" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="BusinessProfiles" Relationship="PurevisionModel.FK_BusinessProfiles_Businesses" FromRole="Business" ToRole="BusinessProfile" />
+          <NavigationProperty Name="Organizations" Relationship="PurevisionModel.BusinessOrganization" FromRole="Business" ToRole="Organization" />
+        </EntityType>
+        <EntityType Name="BusinessProfile">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BusinessId" Type="Int32" Nullable="false" />
+          <Property Name="PropertyId" Type="Int32" Nullable="false" />
+          <Property Name="PropertyValue" Type="String" MaxLength="3750" FixedLength="false" Unicode="true" />
+          <Property Name="PropertyText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Visibility" Type="Int32" Nullable="false" />
+          <Property Name="CreatedOnDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedByUserId" Type="Int32" Nullable="false" />
+          <Property Name="UpdatedOnDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedByUserId" Type="Int32" Nullable="false" />
+          <Property Name="ArchivedOnDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ArchivedByUserId" Type="Int32" Nullable="false" />
+          <Property Name="ExtendedVisibility" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Business" Relationship="PurevisionModel.FK_BusinessProfiles_Businesses" FromRole="BusinessProfile" ToRole="Business" />
+          <NavigationProperty Name="ProfileProperty" Relationship="PurevisionModel.FK_BusinessProfiles_ProfileProperties" FromRole="BusinessProfile" ToRole="ProfileProperty" />
+        </EntityType>
+        <EntityType Name="PersonalProfile">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PersonId" Type="Int32" Nullable="false" />
+          <Property Name="PropertyId" Type="Int32" Nullable="false" />
+          <Property Name="PropertyValue" Type="String" MaxLength="3750" FixedLength="false" Unicode="true" />
+          <Property Name="PropertyText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Visibility" Type="Int32" Nullable="false" />
+          <Property Name="CreatedOnDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedByUserId" Type="Int32" Nullable="false" />
+          <Property Name="UpdatedOnDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedByUserId" Type="Int32" Nullable="false" />
+          <Property Name="ArchivedOnDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ArchivedByUserId" Type="Int32" Nullable="false" />
+          <Property Name="ExtendedVisibility" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="People" Relationship="PurevisionModel.FK_PersonalProfiles_People" FromRole="PersonalProfile" ToRole="People" />
+          <NavigationProperty Name="ProfileProperty" Relationship="PurevisionModel.FK_ClientProfiles_ProfileProperties" FromRole="ClientProfile" ToRole="ProfileProperty" />
+        </EntityType>
+        <EntityType Name="List">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Value" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Text" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ParentId" Type="Int32" />
+          <Property Name="Level" Type="Int32" Nullable="false" />
+          <Property Name="SortOrder" Type="Int32" Nullable="false" />
+          <Property Name="DefinitionId" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="IsSystem" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedOnDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedByUserId" Type="Int32" />
+          <Property Name="UpdatedOnDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedByUserId" Type="Int32" />
+          <Property Name="ArchivedOnDate" Type="DateTime" Precision="3" />
+          <Property Name="ArchivedByUserId" Type="Int32" />
+          <NavigationProperty Name="Lists" Relationship="PurevisionModel.ListList" FromRole="List" ToRole="List1" />
+          <NavigationProperty Name="List1" Relationship="PurevisionModel.ListList" FromRole="List1" ToRole="List" />
+        </EntityType>
+        <EntityType Name="ProfileProperty">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DataType" Type="Int32" Nullable="false" />
+          <Property Name="Default" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Category" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Length" Type="Int32" Nullable="false" />
+          <Property Name="Required" Type="Boolean" Nullable="false" />
+          <Property Name="Validation" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="Order" Type="Int32" Nullable="false" />
+          <Property Name="Visible" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedOnDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedByUserID" Type="Int32" />
+          <Property Name="UpdatedOnDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedByUserID" Type="Int32" />
+          <Property Name="ArchivedOnDate" Type="DateTime" Precision="3" />
+          <Property Name="ArchivedByUserID" Type="Int32" />
+          <Property Name="DefaultVisibility" Type="Int32" />
+          <Property Name="ReadOnly" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="BusinessProfiles" Relationship="PurevisionModel.FK_BusinessProfiles_ProfileProperties" FromRole="ProfileProperty" ToRole="BusinessProfile" />
+          <NavigationProperty Name="ClientProfiles" Relationship="PurevisionModel.FK_ClientProfiles_ProfileProperties" FromRole="ProfileProperty" ToRole="ClientProfile" />
+          <NavigationProperty Name="UserProfiles" Relationship="PurevisionModel.FK_UserProfiles_ProfileProperties" FromRole="ProfileProperty" ToRole="UserProfile" />
+        </EntityType>
+        <EntityType Name="UserProfile">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="PropertyId" Type="Int32" Nullable="false" />
+          <Property Name="PropertyValue" Type="String" MaxLength="3750" FixedLength="false" Unicode="true" />
+          <Property Name="PropertyText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Visibility" Type="Int32" Nullable="false" />
+          <Property Name="CreatedOnDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedByUserId" Type="Int32" Nullable="false" />
+          <Property Name="UpdatedOnDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdatedByUserId" Type="Int32" Nullable="false" />
+          <Property Name="ArchivedOnDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ArchivedByUserId" Type="Int32" Nullable="false" />
+          <Property Name="ExtendedVisibility" Type="String" MaxLength="400" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ProfileProperty" Relationship="PurevisionModel.FK_UserProfiles_ProfileProperties" FromRole="UserProfile" ToRole="ProfileProperty" />
+          <NavigationProperty Name="User" Relationship="PurevisionModel.FK_UserProfiles_Users" FromRole="UserProfile" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_BusinessProfiles_Businesses">
+          <End Type="PurevisionModel.Business" Role="Business" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="PurevisionModel.BusinessProfile" Role="BusinessProfile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Business">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BusinessProfile">
+              <PropertyRef Name="BusinessId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BusinessProfiles_ProfileProperties">
+          <End Type="PurevisionModel.ProfileProperty" Role="ProfileProperty" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="PurevisionModel.BusinessProfile" Role="BusinessProfile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProfileProperty">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BusinessProfile">
+              <PropertyRef Name="PropertyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonalProfiles_People">
+          <End Type="PurevisionModel.People" Role="People" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="PurevisionModel.PersonalProfile" Role="PersonalProfile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="People">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PersonalProfile">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientProfiles_ProfileProperties">
+          <End Type="PurevisionModel.ProfileProperty" Role="ProfileProperty" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="PurevisionModel.PersonalProfile" Role="ClientProfile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProfileProperty">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClientProfile">
+              <PropertyRef Name="PropertyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserProfiles_ProfileProperties">
+          <End Type="PurevisionModel.ProfileProperty" Role="ProfileProperty" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="PurevisionModel.UserProfile" Role="UserProfile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProfileProperty">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserProfile">
+              <PropertyRef Name="PropertyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserProfiles_Users">
+          <End Type="PurevisionModel.User" Role="User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="PurevisionModel.UserProfile" Role="UserProfile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserProfile">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Organization">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="ParentId" Type="Int32" />
+          <Property Name="PersonId" Type="Int32" />
+          <Property Name="BusinessId" Type="Int32" />
+          <Property Name="SortOrder" Type="Int32" />
+          <Property Name="Level" Type="Int32" />
+          <Property Name="CreatedOnDate" Type="DateTime" Precision="3" />
+          <Property Name="CreatedByUserId" Type="Int32" />
+          <Property Name="UpdatedOnDate" Type="DateTime" Precision="3" />
+          <Property Name="UpdatedByUserId" Type="Int32" />
+          <Property Name="ArchivedOnDate" Type="DateTime" Precision="3" />
+          <Property Name="ArchivedByUserId" Type="Int32" />
+          <NavigationProperty Name="People" Relationship="PurevisionModel.OrganizationPeople" FromRole="Organization" ToRole="People" />
+          <NavigationProperty Name="Businesses" Relationship="PurevisionModel.BusinessOrganization" FromRole="Organization" ToRole="Business" />
+        </EntityType>
+        <Association Name="OrganizationPeople">
+          <End Type="PurevisionModel.Organization" Role="Organization" Multiplicity="1" />
+          <End Type="PurevisionModel.People" Role="People" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Organization">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="People">
+              <PropertyRef Name="OrganizationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="BusinessOrganization">
+          <End Type="PurevisionModel.Business" Role="Business" Multiplicity="0..1" />
+          <End Type="PurevisionModel.Organization" Role="Organization" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Business">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Organization">
+              <PropertyRef Name="BusinessId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ListList">
+          <End Type="PurevisionModel.List" Role="List" Multiplicity="0..1" />
+          <End Type="PurevisionModel.List" Role="List1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="List">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="List1">
+              <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="PurevisionModelStoreContainer" CdmEntityContainer="PurevisionEntities">
-          <EntitySetMapping Name="Clients">
-            <EntityTypeMapping TypeName="PurevisionModel.Client">
-              <MappingFragment StoreEntitySet="Clients">
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="MeetingAttendees">
-            <EntityTypeMapping TypeName="PurevisionModel.MeetingAttendee">
-              <MappingFragment StoreEntitySet="MeetingAttendees">
-                <ScalarProperty Name="MeetingID" ColumnName="MeetingID" />
-                <ScalarProperty Name="AttendeeID" ColumnName="AttendeeID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Meetings">
-            <EntityTypeMapping TypeName="PurevisionModel.Meeting">
-              <MappingFragment StoreEntitySet="Meetings">
-                <ScalarProperty Name="MeetingID" ColumnName="MeetingID" />
-                <ScalarProperty Name="Start" ColumnName="Start" />
-                <ScalarProperty Name="End" ColumnName="End" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="RoomID" ColumnName="RoomID" />
-                <ScalarProperty Name="IsAllDay" ColumnName="IsAllDay" />
-                <ScalarProperty Name="RecurrenceRule" ColumnName="RecurrenceRule" />
-                <ScalarProperty Name="RecurrenceID" ColumnName="RecurrenceID" />
-                <ScalarProperty Name="RecurrenceException" ColumnName="RecurrenceException" />
-                <ScalarProperty Name="StartTimezone" ColumnName="StartTimezone" />
-                <ScalarProperty Name="EndTimezone" ColumnName="EndTimezone" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AspNetRoles">
-            <EntityTypeMapping TypeName="PurevisionModel.AspNetRole">
-              <MappingFragment StoreEntitySet="AspNetRoles">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AspNetUserClaims">
-            <EntityTypeMapping TypeName="PurevisionModel.AspNetUserClaim">
-              <MappingFragment StoreEntitySet="AspNetUserClaims">
-                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
-                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AspNetUserLogins">
-            <EntityTypeMapping TypeName="PurevisionModel.AspNetUserLogin">
-              <MappingFragment StoreEntitySet="AspNetUserLogins">
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
-                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AspNetUsers">
-            <EntityTypeMapping TypeName="PurevisionModel.AspNetUser">
-              <MappingFragment StoreEntitySet="AspNetUsers">
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
-                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
-                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
-                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
-                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
-                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
-                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <AssociationSetMapping Name="AspNetUserRoles" TypeName="PurevisionModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
-            <EndProperty Name="AspNetUser">
-              <ScalarProperty Name="Id" ColumnName="UserId" />
-            </EndProperty>
-            <EndProperty Name="AspNetRole">
-              <ScalarProperty Name="Id" ColumnName="RoleId" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <EntitySetMapping Name="Tasks">
-            <EntityTypeMapping TypeName="PurevisionModel.Task">
-              <MappingFragment StoreEntitySet="Tasks">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="PurevisionModel.User">
-              <MappingFragment StoreEntitySet="Users">
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
-                <ScalarProperty Name="LastModifiedOnDate" ColumnName="LastModifiedOnDate" />
-                <ScalarProperty Name="LastModifiedByUserId" ColumnName="LastModifiedByUserId" />
-                <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
-                <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="AspNetUserId" ColumnName="AspNetUserId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-        </EntityContainerMapping>
-      </Mapping>
-    </edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="PurevisionModelStoreContainer" CdmEntityContainer="PurevisionEntities">
+    <EntitySetMapping Name="People">
+      <EntityTypeMapping TypeName="IsTypeOf(PurevisionModel.People)">
+        <MappingFragment StoreEntitySet="Clients">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="OrganizationId" ColumnName="CompanyId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MeetingAttendees">
+      <EntityTypeMapping TypeName="IsTypeOf(PurevisionModel.MeetingAttendee)">
+        <MappingFragment StoreEntitySet="MeetingAttendees">
+          <ScalarProperty Name="MeetingID" ColumnName="MeetingID" />
+          <ScalarProperty Name="AttendeeID" ColumnName="AttendeeID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Meetings">
+      <EntityTypeMapping TypeName="IsTypeOf(PurevisionModel.Meeting)">
+        <MappingFragment StoreEntitySet="Meetings">
+          <ScalarProperty Name="MeetingID" ColumnName="MeetingID" />
+          <ScalarProperty Name="Start" ColumnName="Start" />
+          <ScalarProperty Name="End" ColumnName="End" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="RoomID" ColumnName="RoomID" />
+          <ScalarProperty Name="IsAllDay" ColumnName="IsAllDay" />
+          <ScalarProperty Name="RecurrenceRule" ColumnName="RecurrenceRule" />
+          <ScalarProperty Name="RecurrenceID" ColumnName="RecurrenceID" />
+          <ScalarProperty Name="RecurrenceException" ColumnName="RecurrenceException" />
+          <ScalarProperty Name="StartTimezone" ColumnName="StartTimezone" />
+          <ScalarProperty Name="EndTimezone" ColumnName="EndTimezone" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetRoles">
+      <EntityTypeMapping TypeName="IsTypeOf(PurevisionModel.AspNetRole)">
+        <MappingFragment StoreEntitySet="AspNetRoles">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUserClaims">
+      <EntityTypeMapping TypeName="IsTypeOf(PurevisionModel.AspNetUserClaim)">
+        <MappingFragment StoreEntitySet="AspNetUserClaims">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+          <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUserLogins">
+      <EntityTypeMapping TypeName="IsTypeOf(PurevisionModel.AspNetUserLogin)">
+        <MappingFragment StoreEntitySet="AspNetUserLogins">
+          <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+          <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AspNetUsers">
+      <EntityTypeMapping TypeName="IsTypeOf(PurevisionModel.AspNetUser)">
+        <MappingFragment StoreEntitySet="AspNetUsers">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+          <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+          <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+          <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+          <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+          <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+          <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tasks">
+      <EntityTypeMapping TypeName="IsTypeOf(PurevisionModel.Task)">
+        <MappingFragment StoreEntitySet="Tasks">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="IsTypeOf(PurevisionModel.User)">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="AspNetUserId" ColumnName="AspNetUserId" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="DisplayName" ColumnName="DisplayName" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="LastModifiedByUserId" ColumnName="LastModifiedByUserId" />
+          <ScalarProperty Name="LastModifiedOnDate" ColumnName="LastModifiedOnDate" />
+          <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
+          <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Businesses">
+      <EntityTypeMapping TypeName="IsTypeOf(PurevisionModel.Business)">
+        <MappingFragment StoreEntitySet="Businesses">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="PrincipleOwnerUserId" ColumnName="PrincipleOwnerUserId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Number" ColumnName="Number" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BusinessProfiles">
+      <EntityTypeMapping TypeName="IsTypeOf(PurevisionModel.BusinessProfile)">
+        <MappingFragment StoreEntitySet="BusinessProfiles">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="BusinessId" ColumnName="BusinessId" />
+          <ScalarProperty Name="PropertyId" ColumnName="PropertyId" />
+          <ScalarProperty Name="PropertyValue" ColumnName="PropertyValue" />
+          <ScalarProperty Name="PropertyText" ColumnName="PropertyText" />
+          <ScalarProperty Name="Visibility" ColumnName="Visibility" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="UpdatedOnDate" ColumnName="UpdatedOnDate" />
+          <ScalarProperty Name="UpdatedByUserId" ColumnName="UpdatedByUserId" />
+          <ScalarProperty Name="ArchivedOnDate" ColumnName="ArchivedOnDate" />
+          <ScalarProperty Name="ArchivedByUserId" ColumnName="ArchivedByUserId" />
+          <ScalarProperty Name="ExtendedVisibility" ColumnName="ExtendedVisibility" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PersonalProfiles">
+      <EntityTypeMapping TypeName="IsTypeOf(PurevisionModel.PersonalProfile)">
+        <MappingFragment StoreEntitySet="ClientProfiles">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="PersonId" ColumnName="ClientId" />
+          <ScalarProperty Name="PropertyId" ColumnName="PropertyId" />
+          <ScalarProperty Name="PropertyValue" ColumnName="PropertyValue" />
+          <ScalarProperty Name="PropertyText" ColumnName="PropertyText" />
+          <ScalarProperty Name="Visibility" ColumnName="Visibility" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="UpdatedOnDate" ColumnName="UpdatedOnDate" />
+          <ScalarProperty Name="UpdatedByUserId" ColumnName="UpdatedByUserId" />
+          <ScalarProperty Name="ArchivedOnDate" ColumnName="ArchivedOnDate" />
+          <ScalarProperty Name="ArchivedByUserId" ColumnName="ArchivedByUserId" />
+          <ScalarProperty Name="ExtendedVisibility" ColumnName="ExtendedVisibility" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Lists">
+      <EntityTypeMapping TypeName="IsTypeOf(PurevisionModel.List)">
+        <MappingFragment StoreEntitySet="Lists">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Value" ColumnName="Value" />
+          <ScalarProperty Name="Text" ColumnName="Text" />
+          <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+          <ScalarProperty Name="Level" ColumnName="Level" />
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+          <ScalarProperty Name="DefinitionId" ColumnName="DefinitionId" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="IsSystem" ColumnName="IsSystem" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="UpdatedOnDate" ColumnName="UpdatedOnDate" />
+          <ScalarProperty Name="UpdatedByUserId" ColumnName="UpdatedByUserId" />
+          <ScalarProperty Name="ArchivedOnDate" ColumnName="ArchivedOnDate" />
+          <ScalarProperty Name="ArchivedByUserId" ColumnName="ArchivedByUserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProfileProperties">
+      <EntityTypeMapping TypeName="IsTypeOf(PurevisionModel.ProfileProperty)">
+        <MappingFragment StoreEntitySet="ProfileProperties">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="DataType" ColumnName="DataType" />
+          <ScalarProperty Name="Default" ColumnName="Default" />
+          <ScalarProperty Name="Category" ColumnName="Category" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Length" ColumnName="Length" />
+          <ScalarProperty Name="Required" ColumnName="Required" />
+          <ScalarProperty Name="Validation" ColumnName="Validation" />
+          <ScalarProperty Name="Order" ColumnName="Order" />
+          <ScalarProperty Name="Visible" ColumnName="Visible" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="CreatedByUserID" ColumnName="CreatedByUserID" />
+          <ScalarProperty Name="UpdatedOnDate" ColumnName="UpdatedOnDate" />
+          <ScalarProperty Name="UpdatedByUserID" ColumnName="UpdatedByUserID" />
+          <ScalarProperty Name="ArchivedOnDate" ColumnName="ArchivedOnDate" />
+          <ScalarProperty Name="ArchivedByUserID" ColumnName="ArchivedByUserID" />
+          <ScalarProperty Name="DefaultVisibility" ColumnName="DefaultVisibility" />
+          <ScalarProperty Name="ReadOnly" ColumnName="ReadOnly" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserProfiles">
+      <EntityTypeMapping TypeName="IsTypeOf(PurevisionModel.UserProfile)">
+        <MappingFragment StoreEntitySet="UserProfiles">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="PropertyId" ColumnName="PropertyId" />
+          <ScalarProperty Name="PropertyValue" ColumnName="PropertyValue" />
+          <ScalarProperty Name="PropertyText" ColumnName="PropertyText" />
+          <ScalarProperty Name="Visibility" ColumnName="Visibility" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="UpdatedOnDate" ColumnName="UpdatedOnDate" />
+          <ScalarProperty Name="UpdatedByUserId" ColumnName="UpdatedByUserId" />
+          <ScalarProperty Name="ArchivedOnDate" ColumnName="ArchivedOnDate" />
+          <ScalarProperty Name="ArchivedByUserId" ColumnName="ArchivedByUserId" />
+          <ScalarProperty Name="ExtendedVisibility" ColumnName="ExtendedVisibility" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Organizations">
+      <EntityTypeMapping TypeName="IsTypeOf(PurevisionModel.Organization)">
+        <MappingFragment StoreEntitySet="Organizations">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+          <ScalarProperty Name="PersonId" ColumnName="ClientId" />
+          <ScalarProperty Name="BusinessId" ColumnName="BusinessId" />
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+          <ScalarProperty Name="Level" ColumnName="Level" />
+          <ScalarProperty Name="CreatedOnDate" ColumnName="CreatedOnDate" />
+          <ScalarProperty Name="CreatedByUserId" ColumnName="CreatedByUserId" />
+          <ScalarProperty Name="UpdatedOnDate" ColumnName="UpdatedOnDate" />
+          <ScalarProperty Name="UpdatedByUserId" ColumnName="UpdatedByUserId" />
+          <ScalarProperty Name="ArchivedOnDate" ColumnName="ArchivedOnDate" />
+          <ScalarProperty Name="ArchivedByUserId" ColumnName="ArchivedByUserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="AspNetUserRoles" TypeName="PurevisionModel.AspNetUserRoles" StoreEntitySet="AspNetUserRoles">
+      <EndProperty Name="AspNetRole">
+        <ScalarProperty Name="Id" ColumnName="AspNetRoles_Id" />
+      </EndProperty>
+      <EndProperty Name="AspNetUser">
+        <ScalarProperty Name="Id" ColumnName="AspNetUsers_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
   <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
@@ -563,7 +1269,7 @@
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="true" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
-        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>

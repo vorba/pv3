@@ -16,10 +16,10 @@ namespace Purevision.Controllers
 {
     public class ClientsController : Controller
     {
-        private PurevisionEntities db = new PurevisionEntities();
+        private PurevisionModel2 db = new PurevisionModel2();
 
         private User _user;
-        private IQueryable<Client> _clients;
+        private IQueryable<Person> _clients;
 
         public ClientsController ()
         {
@@ -27,7 +27,7 @@ namespace Purevision.Controllers
             try
             {
                 _user = db.Users.Single(user => user.Email == userEmail);
-                _clients = db.Clients.Where(client => client.UserId == _user.Id);
+                _clients = db.People.Where(client => client.UserId == _user.Id);
 
             }
             catch (Exception ex)
@@ -53,7 +53,13 @@ namespace Purevision.Controllers
             DataSourceResult result = _clients.ToDataSourceResult(request, client => new ClientViewModel
             {
                 Id = client.Id,
-                Name = client.Name
+                FirstName = client.FirstName,
+                LastName = client.LastName,
+                Phone = client.Phone,
+                Email = client.Email,
+                Comments = client.Comments,
+                UserId = client.UserId
+
             });
             return Json(result);
 
@@ -76,12 +82,12 @@ namespace Purevision.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Client client = await db.Clients.FindAsync(id);
-            if (client == null)
+            Person person = await db.People.FindAsync(id);
+            if (person == null)
             {
                 return HttpNotFound();
             }
-            return View(client);
+            return View(person);
         }
 
         // GET: Clients/Create
@@ -95,32 +101,32 @@ namespace Purevision.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Name")] Client client)
+        public async Task<ActionResult> Create([Bind(Include = "Id,FirstName,LastName,UserId")] Person person)
         {
             if (ModelState.IsValid)
             {
-                client.UserId = _user.Id;
-                db.Clients.Add(client);
+                person.UserId = _user.Id;
+                db.People.Add(person);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
-            return View(client);
+            return View(person);
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult EditingInline_Create([DataSourceRequest] DataSourceRequest request, Client client)
+        public ActionResult EditingInline_Create([DataSourceRequest] DataSourceRequest request, Person person)
         {
-            if (client != null && ModelState.IsValid)
+            if (person != null && ModelState.IsValid)
             {
-                client.UserId = _user.Id;
+                person.UserId = _user.Id;
                 //productService.Create(client);
-                db.Clients.Add(client);
+                db.People.Add(person);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return Json(new[] { client }.ToDataSourceResult(request, ModelState));
+            return Json(new[] { person }.ToDataSourceResult(request, ModelState));
         }
 
         // GET: Clients/Edit/5
@@ -130,12 +136,12 @@ namespace Purevision.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Client client = await db.Clients.FindAsync(id);
-            if (client == null)
+            Person person = await db.People.FindAsync(id);
+            if (person == null)
             {
                 return HttpNotFound();
             }
-            return View(client);
+            return View(person);
         }
 
         // POST: Clients/Edit/5
@@ -143,28 +149,28 @@ namespace Purevision.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Name")] Client client)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,FirstName,LastName,UserId")] Person person)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(client).State = EntityState.Modified;
+                db.Entry(person).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return View(client);
+            return View(person);
         }
 
         // Action method to update company record to database.
         // Accecpt only HTTP POST request from client side.
         // DataSourceRequest is aded into the method for the auto creation of KendoUI grid parameters like page, index etc.
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Update([DataSourceRequest] DataSourceRequest request, Client client)
+        public ActionResult Update([DataSourceRequest] DataSourceRequest request, Person person)
         {
             // Test if company object and modelstate is valid.
-            if (client != null && ModelState.IsValid)
+            if (person != null && ModelState.IsValid)
             {
                 // Update client to UoW.
-                db.Entry(client).State = EntityState.Modified;
+                db.Entry(person).State = EntityState.Modified;
                 // Save updated client to database using UoW.
                 db.SaveChanges();
             }
@@ -179,12 +185,12 @@ namespace Purevision.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Client client = await db.Clients.FindAsync(id);
-            if (client == null)
+            Person person = await db.People.FindAsync(id);
+            if (person == null)
             {
                 return HttpNotFound();
             }
-            return View(client);
+            return View(person);
         }
 
         // POST: Clients/Delete/5
@@ -192,25 +198,25 @@ namespace Purevision.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Client client = await db.Clients.FindAsync(id);
-            db.Clients.Remove(client);
+            Person person = await db.People.FindAsync(id);
+            db.People.Remove(person);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult EditingInline_Destroy([DataSourceRequest] DataSourceRequest request, Client client)
+        public ActionResult EditingInline_Destroy([DataSourceRequest] DataSourceRequest request, Person person)
         {
-            if (client != null && ModelState.IsValid)
+            if (person != null && ModelState.IsValid)
             {
                 //Client client2 = db.Clients.Find(client.Id);
                 //db.Clients.Remove(client2);
-                db.Entry(client).State = EntityState.Deleted;
+                db.Entry(person).State = EntityState.Deleted;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return Json(new[] { client }.ToDataSourceResult(request, ModelState));
+            return Json(new[] { person }.ToDataSourceResult(request, ModelState));
         }
 
         protected override void Dispose(bool disposing)

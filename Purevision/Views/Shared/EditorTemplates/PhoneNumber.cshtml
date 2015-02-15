@@ -1,0 +1,9 @@
+﻿@model object 
+
+@*@Html.TextBox("", ViewData.Model, new { @class = "form-control" })*@
+
+@(Html.Kendo().MaskedTextBoxFor(m => m)
+    .Name("phone")
+    .Mask("(000) 000-0000")
+    //.Value(ViewData.ModelMetadata.Model.ToString())
+)

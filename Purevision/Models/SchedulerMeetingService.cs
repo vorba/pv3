@@ -7,15 +7,15 @@
 
     public class SchedulerMeetingService : ISchedulerEventService<MeetingViewModel>
     {
-        private PurevisionEntities db;
+        private PurevisionModel2 db;
 
-        public SchedulerMeetingService(PurevisionEntities context)
+        public SchedulerMeetingService(PurevisionModel2 context)
         {
             db = context;
         }
 
         public SchedulerMeetingService()
-            : this(new PurevisionEntities())
+            : this(new PurevisionModel2())
         {
         }
 
