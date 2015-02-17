@@ -14,8 +14,13 @@ namespace Purevision.Models
     {
         public PhoneNumber(string phoneNumber)
         {
-            Number = phoneNumber;
-
+            Number = new System.Text.RegularExpressions.Regex(@"[^\d]").Replace(phoneNumber, "");
+            if (Number.Length == 10)
+            {
+                Area = Number.Substring(0, 3);
+                Nxx = Number.Substring(3, 3);
+                Station = Number.Substring(6, 4);
+            }
         }
         public string Country { get; set; }
         public string Area { get; set; }
@@ -37,9 +42,9 @@ namespace Purevision.Models
         public string ToString(string format)
         {
             // Handle null or empty string. 
-            if (String.IsNullOrEmpty(format)) format = "C";
+            if (String.IsNullOrEmpty(format)) format = "n";
             // Remove spaces and convert to uppercase.
-            format = format.Trim().ToUpperInvariant();
+            format = format.Trim().ToLowerInvariant();
 
             string phone = "";
 

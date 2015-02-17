@@ -14,6 +14,7 @@ using Purevision.Models;
 
 namespace Purevision.Controllers
 {
+
     public class ClientsController : Controller
     {
         private PurevisionModel2 db = new PurevisionModel2();
@@ -50,17 +51,17 @@ namespace Purevision.Controllers
             //{
             //IQueryable<Client> clients = db.Clients.Where(client => client.UserId == _user.Id);
             // Convert the Client entities to ClientViewModel instances
-            DataSourceResult result = _clients.ToDataSourceResult(request, client => new ClientViewModel
-            {
-                Id = client.Id,
-                FirstName = client.FirstName,
-                LastName = client.LastName,
-                Phone = client.Phone,
-                Email = client.Email,
-                Comments = client.Comments,
-                UserId = client.UserId
-            });
-            return Json(result);
+            //DataSourceResult result = _clients.ToDataSourceResult(request, client => new ClientViewModel
+            //{
+            //    Id = client.Id,
+            //    FirstName = client.FirstName,
+            //    LastName = client.LastName,
+            //    Phone = client.Phone,
+            //    Email = client.Email,
+            //    Comments = client.Comments,
+            //    UserId = client.UserId
+            //});
+            //return Json(result);
 
             //return Json(db.Clients.ToDataSourceResult(
             //    request, client => new ClientViewModel
@@ -70,7 +71,7 @@ namespace Purevision.Controllers
             //    })
             //);
 
-                //return Json(new[] { client }.ToDataSourceResult(request, ModelState));
+            return Json(_clients.ToDataSourceResult(request, ModelState));
             //}
         }
 
@@ -168,6 +169,7 @@ namespace Purevision.Controllers
             // Test if company object and modelstate is valid.
             if (person != null && ModelState.IsValid)
             {
+                person.Phone = new PhoneNumber(person.Phone).Number;
                 // Update client to UoW.
                 db.Entry(person).State = EntityState.Modified;
                 // Save updated client to database using UoW.

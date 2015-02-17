@@ -20,7 +20,7 @@ namespace Purevision.Models
 
         [Required]
         [StringLength(10)]
-        [Display(Name = "Given", Prompt = "Given Name")]
+        [Display(Name = "Given Name", Prompt = "Given Name")]
         public string FirstName { get; set; }
 
         [Required]

@@ -4,29 +4,72 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Clients</h2>
+@*<h2>Clients</h2>*@
 
-@(Html.Kendo().TabStrip()
-    .Name("ClientViewTabStrip")
-    .Items(items =>
-    {
-        items.Add()
-            .Text("Clients")
-            .Selected(true)
-            .Content(
-                @<text>
-                     @ClientGrid()
-                 </text>)
-            .ContentHtmlAttributes(new { style = "min-height: 200px" });
-        items.Add()
-            .Text("HTML")
-            .Content(
-                @<text>
-                    @ClientView()
-                </text>)
-            .ContentHtmlAttributes(new { style = "min-height: 200px" });
-    })
+<br/>
+
+@* Kendo UI ASP MVC PanelBar:  http://demos.telerik.com/aspnet-mvc/panelbar/index *@
+
+@(Html.Kendo().PanelBar()
+        .Name("ClientPanelBar")
+        .ExpandMode(PanelBarExpandMode.Single)
+        .Items(items =>
+        {
+            items.Add()
+                .Text("<strong>Clients</strong>").Encoded(false)
+                //.Selected(true)
+                .Expanded(true)
+                .Content(@<text>
+                    @RenderClientTabbedView()
+                </text>);
+            items.Add()
+                .Text("Tasks")
+                .Content(@<text>
+                    <p style="padding:0 1em; padding-top: 0.7em">
+                        Select a client from above to view list of scheduled tasks for that client.
+                        @*<a href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more…</a>*@
+                    </p>
+                </text>);
+            items.Add()
+                .Text("Help")
+                .Content(@<text>
+                    <p style="padding:0 1em; padding-top: 0.7em">
+                        Manage and select a client from the "Clients" tray, then select Tasks tray to view and manage client tasks.
+                        @*<a href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more…</a>*@
+                    </p>
+                </text>);
+        })
+
+
 )
+
+
+@helper RenderClientTabbedView()
+{
+    @*<h2>Clients</h2>*@
+    
+    @(Html.Kendo().TabStrip()
+        .Name("ClientViewTabStrip")
+        .Items(items =>
+        {
+            items.Add()
+                .Text("Clients")
+                .Selected(true)
+                .Content(
+                    @<text>
+                         @ClientGrid()
+                     </text>)
+                .ContentHtmlAttributes(new { style = "min-height: 200px" });
+            items.Add()
+                .Text("HTML")
+                .Content(
+                    @<text>
+                        @ClientView()
+                    </text>)
+                .ContentHtmlAttributes(new { style = "min-height: 200px" });
+        })
+    )
+}
 
 @helper ClientView() {
     <p>
@@ -68,23 +111,27 @@
           .Name("grid")
           .Columns(columns =>
           {
-              columns.Bound(c => c.FirstName).Width(140);
-              columns.Bound(c => c.LastName).Width(140);
+              columns.Bound(c => c.FirstName).Width(100);
+              columns.Bound(c => c.LastName).Width(130);
               columns.Bound(c => c.Email).Width(140);
-              columns.Bound(c => c.Phone).Width(140);
+              columns.Bound(c => c.Phone).ClientTemplate("#= (data.Phone) ? formatPhoneNumber(data.Phone) : 'none' #").Width(130);
               columns.Bound(c => c.Comments).Hidden().Width(140);
               columns.Bound(c => c.UserId).Hidden();
               columns.Command(command =>
               {
                   command.Edit();
                   command.Destroy();
-              }).Width(172);
+                  command.Custom("Manage Tasks").Click("manageTasks");
+              }).Width(190);
           })
           .ToolBar(toolbar => toolbar.Create())
           //.HtmlAttributes(new { style = "height: 380px;" })
-          .Scrollable()
           //.Groupable()
+          .Selectable(s => s.Mode(GridSelectionMode.Single))
+          .Events(e => e.Change("onChange"))
+          .Scrollable()
           .Sortable()
+          //.Navigatable()
           .Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("Edit"))
           .Pageable(pageable => pageable
               .Refresh(true)
@@ -103,18 +150,88 @@
           )
 }
 
+
+@(Html.Kendo().Window().Name("ClientDetail")
+    .Title("Client Details")
+    .Visible(false)
+    .Modal(true)
+    .Draggable(true)
+    .Width(300)
+)
+
+<script type="text/x-kendo-template" id="template">
+    <div id="details-container">
+        <h2>#= FirstName # #= LastName #</h2>
+        @*<em>#= Title #</em>
+        <dl>
+            <dt>City: #= City #</dt>
+            <dt>Address: #= Address #</dt>
+        </dl>*@
+    </div>
+</script>
+
 <script type="text/javascript">
-        function error_handler(e) {
-            if (e.errors) {
-                var message = "Errors:\n";
-                $.each(e.errors, function (key, value) {
-                    if ('errors' in value) {
-                        $.each(value.errors, function () {
-                            message += this + "\n";
-                        });
-                    }
-                });
-                alert(message);
-            }
+    function error_handler(e) {
+        if (e.errors) {
+            var message = "Errors:\n";
+            $.each(e.errors, function (key, value) {
+                if ('errors' in value) {
+                    $.each(value.errors, function () {
+                        message += this + "\n";
+                    });
+                }
+            });
+            alert(message);
         }
+    }
+
+    // Manage Tasks
+
+    var detailsTemplate = kendo.template($("#template").html());
+
+    function manageTasks(e) {
+        e.preventDefault();
+
+        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+        var wnd = $("#ClientDetail").data("kendoWindow");
+
+        wnd.content(detailsTemplate(dataItem));
+        wnd.center().open();
+    } // Manage Tasks -- END
+
+    function onChange(e)
+    {
+        var selected = $.map(this.select(), function (item) {
+            return $(item).text();
+        });
+    }
+
+    function formatPhoneNumber(phoneNumber) {
+
+        // avoid reformatting as formatting returned from edit
+        if (phoneNumber.substring(0, 1) == "(") return phoneNumber;
+
+        var area = phoneNumber.substring(0, 3);     //416
+        var nxx = phoneNumber.substring(3, 6);      //555
+        var station = phoneNumber.substring(6);     //1234
+
+        //should return (416) 555-1234
+        return kendo.format("({0}) {1}-{2}", area, nxx, station);
+    }
+
+    // panel bar events;  Ref: http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/panelbar/overview
+
+    function panelbar_collapse() {
+        //Handle the collapse event
+
+        // Notice that the Name() of the panelbar is used to get its client-side instance
+        var panelbar = $("#ClientPanelBar").data("kendoPanelBar");
+    }
+
+    function panelbar_expand() {
+        //Handle the expand event
+
+        // Notice that the Name() of the panelbar is used to get its client-side instance
+        var panelbar = $("#ClientPanelBar").data("kendoPanelBar");
+    }
 </script>
