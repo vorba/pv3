@@ -24,6 +24,17 @@ namespace Purevision.Controllers
             this.meetingService = new SchedulerMeetingService();
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Partial()
+        {
+            return PartialView("_meetingsPartial");
+        }
+
+
         // GET: Meetings
         public async Task<ActionResult> Index()
         {

@@ -365,6 +365,7 @@
     <Content Include="Views\Clients\EditorTemplates\Edit.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\MultiLineText.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\PhoneNumber.cshtml" />
+    <Content Include="Views\Meetings\_meetingsPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

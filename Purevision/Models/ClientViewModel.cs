@@ -14,5 +14,8 @@ namespace Purevision.Models
         public string Email { get; set; }
         public string Comments { get; set; }
         public int? UserId { get; set; }
+
+        public virtual IQueryable<Person> People { get; set; }
+        public virtual IQueryable<MeetingViewModel> Meetings { get; set; }
     }
 }

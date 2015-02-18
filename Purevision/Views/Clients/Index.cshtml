@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Purevision.Models.Person>
+﻿@model IEnumerable<Purevision.Models.ClientViewModel>
 
 @{
     ViewBag.Title = "Index";
@@ -24,12 +24,12 @@
                 </text>);
             items.Add()
                 .Text("Tasks")
-                .Content(@<text>
+                @*.Content(@<text>
                     <p style="padding:0 1em; padding-top: 0.7em">
                         Select a client from above to view list of scheduled tasks for that client.
-                        @*<a href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more…</a>*@
                     </p>
-                </text>);
+                </text>);*@
+                .LoadContentFrom("Partial", "Meetings");
             items.Add()
                 .Text("Help")
                 .Content(@<text>
@@ -60,18 +60,18 @@
                          @ClientGrid()
                      </text>)
                 .ContentHtmlAttributes(new { style = "min-height: 200px" });
-            items.Add()
+            @*items.Add()
                 .Text("HTML")
                 .Content(
                     @<text>
                         @ClientView()
                     </text>)
-                .ContentHtmlAttributes(new { style = "min-height: 200px" });
+                .ContentHtmlAttributes(new { style = "min-height: 200px" });*@
         })
     )
 }
 
-@helper ClientView() {
+@*@helper ClientView() {
     <p>
         @Html.ActionLink("Create New", "Create")
     </p>
@@ -103,7 +103,7 @@
             </tr>
         }
     </table>
-    }
+    }*@
 
 @helper ClientGrid()
 {
@@ -142,14 +142,13 @@
               .PageSize(20)
               .Events(events => events.Error("error_handler"))
               .Model(model => model.Id(c => c.Id))
-              .Create(create => create.Action("EditingInline_Create", "Clients"))
-              .Read(read => read.Action("Clients_Read", "Clients"))
-              .Update(update => update.Action("Update", "Clients"))
-              .Destroy(update => update.Action("EditingInline_Destroy", "Clients"))
+              .Create(create => create.Action("People_Create", "Clients"))
+              .Read(read => read.Action("People_Read", "Clients"))
+              .Update(update => update.Action("People_Update", "Clients"))
+              .Destroy(update => update.Action("People_Destroy", "Clients"))
               )
           )
 }
-
 
 @(Html.Kendo().Window().Name("ClientDetail")
     .Title("Client Details")
