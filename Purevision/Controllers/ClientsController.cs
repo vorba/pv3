@@ -12,6 +12,13 @@ using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
 using Purevision.Models;
 
+/* References:
+ * 
+ * 
+ * http://www.asp.net/mvc/overview/getting-started/getting-started-with-ef-using-mvc/creating-a-more-complex-data-model-for-an-asp-net-mvc-application
+ * 
+ */
+
 namespace Purevision.Controllers
 {
 
@@ -111,6 +118,12 @@ namespace Purevision.Controllers
             //}
         }
 
+        public ActionResult DetailsPartial()
+        {
+            //return PartialView("Details");
+            return PartialView("Edit");
+        }
+
         // GET: Clients/Details/5
         public async Task<ActionResult> Details(int? id)
         {
@@ -119,11 +132,13 @@ namespace Purevision.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Person person = await db.People.FindAsync(id);
+            //_clientViewModel.Person = await db.People.FindAsync(id);
             if (person == null)
             {
                 return HttpNotFound();
             }
-            return View(person);
+            //return View(person);
+            return PartialView(person);
         }
 
         // GET: Clients/Create
@@ -196,23 +211,40 @@ namespace Purevision.Controllers
             {
                 return HttpNotFound();
             }
-            return View(person);
+            return PartialView(person);
         }
 
         // POST: Clients/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,FirstName,LastName,UserId")] Person person)
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> Edit([Bind(Include = "Id,FirstName,LastName,UserId")] Person person)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.Entry(person).State = EntityState.Modified;
+        //        await db.SaveChangesAsync();
+        //        return RedirectToAction("Index");
+        //    }
+        //    return View(person);
+        //}
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult Edit([DataSourceRequest] DataSourceRequest request, Person person)
         {
-            if (ModelState.IsValid)
+            // Test if company object and modelstate is valid.
+            if (person != null && ModelState.IsValid)
             {
+                person.Phone = new PhoneNumber(person.Phone).Number;
+                // Update client to UoW.
                 db.Entry(person).State = EntityState.Modified;
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                // Save updated client to database using UoW.
+                db.SaveChanges();
             }
-            return View(person);
+            // Return modelstate info back to client side in json format.
+            //return Json(ModelState.ToDataSourceResult());
+            return View("Index");
+            //return RedirectToAction("Index");
         }
 
         // Action method to update company record to database.

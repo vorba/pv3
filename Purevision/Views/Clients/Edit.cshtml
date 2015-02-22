@@ -1,50 +1,322 @@
 ﻿@model Purevision.Models.Person
-
+@using Newtonsoft.Json
 @{
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
+@{
+    var _model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
+}
 
+@*<h2>Edit</h2>*@
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Client</h4>
-        <hr />
+        @*<h4>Client</h4>*@
+        @*<hr />*@
+        <br />
         @Html.ValidationSummary(true)
         @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.UserId)
+        
+        @*<p>Name: <span data-bind="text: name"></span></p>
+        <p>Name: <input data-bind="value: name" /></p>*@
 
         <div class="form-group">
-            @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-4">
                 @Html.EditorFor(model => model.FirstName)
                 @Html.ValidationMessageFor(model => model.FirstName)
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-4">
                 @Html.EditorFor(model => model.LastName)
                 @Html.ValidationMessageFor(model => model.LastName)
             </div>
         </div>
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+            @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-4">
+                @(Html.Kendo().MaskedTextBoxFor(m => m.Phone)
+                    .Name("Phone")
+                    .Mask("(000) 000-0000")
+                )
+                @Html.ValidationMessageFor(m => m.Phone)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.Email)
+                @Html.ValidationMessageFor(model => model.Email)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Comments, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.Comments)
+                @Html.ValidationMessageFor(model => model.Comments)
+            </div>
+        </div>
+        <hr />
+        <div class="form-group">
+            <div class="col-md-offset-1 col-md-7">
+                @*<div class="btn btn-default">
+                    @Html.ActionLink("Archive", "Index")
+                </div>*@
+                @*<button id="archive" class="btn btn-default">Archive</button>*@
+                <input type="button" id="archiveButton" value="Archive" class="btn btn-default" disabled />
+                @*<input type="submit" value="Update" class="btn btn-default" /> THIS CAUSES POST *@
+                <input type="button" id="updateButton" value="Update" class="btn btn-default" />
+                @*<input id="close" value="Update2" class="btn btn-default" onClick="onClick();" />*@
+                @*<input type="Index" value="Close" class="btn btn-default" action="Index" />*@
+                @*<div class="btn btn-default">
+                    @Html.ActionLink("Cancel", "Index")
+                </div>*@
+                @*<input id="cancel" value="Cancel" class="btn btn-default" />*@
+                <input type="button" id="cancelButton" value="Cancel" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
-<div>
+@*<div>
     @Html.ActionLink("Back to List", "Index")
-</div>
+</div>*@
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+<script type="text/javascript">
+
+    //$(function () {
+    //});
+    @*var vm = ko.mapping.fromJS('@Html.Raw(_model)');
+    var vm = {
+        name: ko.observable("Test")
+    };
+    ko.applyBindings(vm);*@
+
+    var changesMade = 0;
+
+    $("#detailWindow [name]").each(function () {
+        var name = $(this).attr("name");
+        $(this).attr("data-bind", "value:" + name );
+    });
+
+    $(document).ready(function (e) {
+        var window = $("#detailWindow");
+        var grid = $("#grid").data("kendoGrid");
+        //var dataItem = grid.dataSource.getByUid(detailDataItemUid);
+
+        //alert(JSON.stringify(dataItem));
+        
+        //alert(JSON.stringify(Model));
+        var model = @Html.Raw(Json.Encode(Model));
+        //alert("Model: " + JSON.stringify(model));
+
+        //alert("detailDataItemIndex: " + JSON.stringify(detailDataItemIndex));
+        //alert("detailDataItemUid: " + JSON.stringify(detailDataItemUid));
+
+        //alert(e.target.nodeName);
+
+        //$("#open").click(function (e) {
+        //    window.data("kendoWindow").open();
+        //});
+
+        //alert("Changes made " + changesMade);
+
+        $("#FirstName").change(function(e){
+            //alert("FirstName " + $("#FirstName").val() + " " + "@Model.FirstName".trim());
+            dataItem.set("FirstName", $("#FirstName").val());
+            if ($("#FirstName").val() != "@Model.FirstName".trim()) {
+                changesMade++;
+            } else {
+                changesMade--;
+            }
+            //$('#updateButton')[0].disabled = (changesMade == 0);
+        });
+
+        $("#LastName").change(function(e){
+            //alert("LastName " + $("#LastName").val() + " " + "@Model.LastName".trim());
+            dataItem.set("LastName", $("#LastName").val());
+            if ($("#LastName").val() != "@Model.LastName".trim()) {
+                changesMade++;
+            } else {
+                changesMade--;
+            }
+            //$('#updateButton')[0].disabled = (changesMade == 0);
+        });
+
+        $("#Phone").change(function(e){
+            dataItem.set("Phone", $("#Phone").val());
+            if ($("#Phone").val() != "@Model.Phone".trim()) {
+                changesMade++;
+            } else {
+                changesMade--;
+            }
+            //$('#updateButton')[0].disabled = (changesMade == 0);
+        });
+
+        $("#Email").change(function(e){
+            dataItem.set("Email", $("#Email").val());
+            if ($("#Email").val() != "@Model.Email".trim()) {
+                changesMade++;
+            } else {
+                changesMade--;
+            }
+            //$('#updateButton')[0].disabled = (changesMade == 0);
+        });
+
+        @*$("#Comments").blur(function(e){
+            alert("Comments " + $("#Comments").val() + " " + "@Model.Comments".trim());
+            if ($("#Comments").val() != "@Model.Comments".trim()) {
+                changesMade++;
+            } else {
+                changesMade = changesMade > 0 ? changeMade-- : 0;
+            }
+            dataItem.set("Comments", $("#Comments").val());
+            alert("Comments " + $("#Comments").val() + " " + "@Model.Comments".trim());
+            alert(changesMade);
+            $('#updateButton')[0].disabled = (changesMade <= 0);
+        });*@
+
+        $("#archiveButton").click(function (e) {
+            alert("Feature coming soon...");
+            window.data("kendoWindow").close();
+        });
+
+        $("#cancelButton").click(function (e) {
+            window.data("kendoWindow").close();
+        });
+
+        $("#updateButton").click(function (e) {
+            //alert("TODO:  code async grid update")
+            //$.ajax({
+            //    url: '/Clients',
+            //    data: { id: id },
+            //    success: function () {
+            //        alert('Added');
+            //    }
+            //});
+
+            //alert(e.target.nodeName);
+
+            //alert(JSON.stringify(this.Model));  // undefined
+
+            //alert(e.model.Phone);
+            @*var data = @Html.Raw(JsonConvert.SerializeObject(this.Model));*@
+            //alert("this.Model " + data);  // [object Object]
+            //alert(model.FirstName);
+
+            // get a reference to the grid widget
+            //var grid = $("#grid").data("kendoGrid");
+            //grid.setDataSource(model);
+            //alert(grid.dataItem(grid.select()));
+            //grid.saveChanges();
+
+            //var id = grid.dataItem($(e.target).closest("tr")).Id;
+            //alert(id);
+
+            //var dataItem = grid.dataSource.at(detailDataItemIndex);
+            //var dataItem = grid.dataSource.getByUid(detailDataItemUid);
+            //dataItem.set(model);
+            //alert("dataItem: " + JSON.stringify(dataItem));
+            @*alert("model: @Model.FirstName");*@
+            //alert($("#FirstName").val());
+
+            // todo:  check each value, and assign if different than old, to new model object
+            // then if any items changes, assign model to grid dataSource, and saveChanges
+
+            @*var m = @Html.Raw(Json.Encode(Model));
+            alert(JSON.stringify(model));*@
+
+            //var changesMade = false;
+
+            @*var FirstName = "@Model.FirstName".trim();
+            alert("Updating " + FirstName + " to " + $("#FirstName").val());*@
+            @*if ($("#FirstName").val() != "@Model.FirstName".trim()) {
+                dataItem.set("FirstName", $("#FirstName").val());
+                changesMade = true;
+            }*@
+
+            @*if ($("#LastName").val() != "@Model.LastName".trim()) {
+                dataItem.set("LastName", $("#LastName").val());
+                ++changesMade;
+            } else {
+                --changesMade;
+            }*@
+
+            @*if ($("#Phone").val() != "@Model.Phone".trim()) {
+                dataItem.set("Phone", $("#Phone").val());
+                ++changesMade;
+            } else {
+                --changesMade;
+            }*@
+
+            @*if ($("#Email").val() != "@Model.Email".trim()) {
+                dataItem.set("Email", $("#Email").val());
+                ++changesMade;
+            } else {
+                --changesMade;
+            }*@
+
+            @*if ($("#Comments").val() != "@Model.Comments".trim()) {
+                dataItem.set("Comments", $("#Comments").val());
+                ++changesMade;
+            } else {
+                --changesMade;
+            }*@
+
+            if (changesMade > 0) {
+                grid.saveChanges();
+                //alert("Saved " + changesMade + " fields.")
+            } else {
+                //alert("No changes.")
+            }
+
+            @*var test = @Html.Raw(Json.Encode(Model));
+            alert("Model: " + JSON.stringify(test));*@
+
+            grid.saveChanges();
+
+            //dataItem.set(model);
+
+            window.data("kendoWindow").close();
+        });
+
+        //$("#refresh").click(function (e) {
+        //    window.data("kendoWindow").refresh();
+        //});
+
+        //$("#center").click(function (e) {
+        //    window.data("kendoWindow").center();
+        //});
+
+        //$("#pin").click(function (e) {
+        //    window.data("kendoWindow").pin();
+        //});
+
+        //$("#unpin").click(function (e) {
+        //    window.data("kendoWindow").unpin();
+        //});
+    });
+
+    function onClick(e) {
+        alert(this.Name);
+        var wnd = $("#ClientDetail").data("kendoWindow");
+        wnd.close();
+        //        alert("test");
+        return;
+    }
+</script>

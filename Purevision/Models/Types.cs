@@ -14,6 +14,8 @@ namespace Purevision.Models
     {
         public PhoneNumber(string phoneNumber)
         {
+            //phoneNumber = phoneNumber == null ? "" : phoneNumber;
+            if (phoneNumber == null) return;
             Number = new System.Text.RegularExpressions.Regex(@"[^\d]").Replace(phoneNumber, "");
             if (Number.Length == 10)
             {
