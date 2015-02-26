@@ -5,9 +5,10 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
-using Purevision.Models;
+using Purevision.Web.Models;
+using Purevision.Web.DataContexts;
 
-namespace Purevision
+namespace Purevision.Web
 {
     public partial class Startup
     {
@@ -15,7 +16,7 @@ namespace Purevision
         public void ConfigureAuth(IAppBuilder app)
         {
             // Configure the db context, user manager and signin manager to use a single instance per request
-            app.CreatePerOwinContext(ApplicationDbContext.Create);
+            app.CreatePerOwinContext(IdentityDb.Create);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
             app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);
 

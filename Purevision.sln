@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		~README.txt = ~README.txt
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Purevision.Entities", "Purevision.Entities\Purevision.Entities.csproj", "{C9C611A5-A45B-4469-99C9-479A726212F0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +28,10 @@ Global
 		{0C40696B-F01B-4B36-A5E7-35581D1A8D20}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C40696B-F01B-4B36-A5E7-35581D1A8D20}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C40696B-F01B-4B36-A5E7-35581D1A8D20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9C611A5-A45B-4469-99C9-479A726212F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9C611A5-A45B-4469-99C9-479A726212F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9C611A5-A45B-4469-99C9-479A726212F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9C611A5-A45B-4469-99C9-479A726212F0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

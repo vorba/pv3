@@ -1,18 +1,18 @@
-namespace Purevision.Migrations
+namespace Purevision.Web.Migrations
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<Purevision.Models.PurevisionModel2>
+    internal sealed class Configuration : DbMigrationsConfiguration<Purevision.Web.DataContexts.PurevisionDb>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(Purevision.Models.PurevisionModel2 context)
+        protected override void Seed(Purevision.Web.DataContexts.PurevisionDb context)
         {
             //  This method will be called after migrating to the latest version.
 

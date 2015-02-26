@@ -4,9 +4,9 @@
     ViewBag.Title = "Edit";
 }
 
-@{
+@*@{
     var _model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
-}
+}*@
 
 @using (Html.BeginForm())
 {
@@ -63,12 +63,20 @@
                 @Html.ValidationMessageFor(model => model.Comments)
             </div>
         </div>
-        <hr />
+
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.BusinessName, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.BusinessName)
+                @Html.ValidationMessageFor(model => model.BusinessName)
+            </div>
+        </div>*@
+        @*<hr />*@
         <div class="form-group">
-            <div class="col-md-offset-1 col-md-7">
+            <div class="col-md-7 pull-right">
                 @*<input type="button" id="archiveButton" value="Archive" class="btn btn-default" disabled />*@
-                <input type="button" id="updateButton" value="Update" class="btn btn-default" />
                 <input type="button" id="cancelButton" value="Cancel" class="btn btn-default" />
+                <input type="button" id="updateButton" value="Update" class="btn btn-primary" />
             </div>
         </div>
     </div>
@@ -93,23 +101,24 @@
         var name = $(this).attr("name");
         $(this).attr("data-bind", "value:" + name );
     });
-
+    
     $(document).ready(function (e) {
-        var window = $("#detailWindow");
+
         var grid = $("#grid").data("kendoGrid");
+        var wnd = $("#detailWindow");
 
         $("#archiveButton").click(function (e) {
             alert("Feature coming soon...");
-            window.data("kendoWindow").close();
+            wnd.data("kendoWindow").close();
         });
 
         $("#updateButton").click(function (e) {
             grid.saveChanges();
-            window.data("kendoWindow").close();
+            wnd.data("kendoWindow").close();
         });
 
         $("#cancelButton").click(function (e) {
-            window.data("kendoWindow").close();
+            wnd.data("kendoWindow").close();
         });
 
         //$("#refresh").click(function (e) {

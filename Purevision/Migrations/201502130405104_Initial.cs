@@ -1,4 +1,4 @@
-namespace Purevision.Migrations
+namespace Purevision.Web.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;
@@ -59,41 +59,41 @@ namespace Purevision.Migrations
             //    .PrimaryKey(t => new { t.LoginProvider, t.ProviderKey, t.UserId })
             //    .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
             //    .Index(t => t.UserId);
-            
-            //CreateTable(
-            //    "dbo.Businesses",
-            //    c => new
-            //        {
-            //            Id = c.Int(nullable: false, identity: true),
-            //            PrincipleOwnerUserId = c.Int(nullable: false),
-            //            Name = c.String(),
-            //            Number = c.String(maxLength: 10, fixedLength: true),
-            //        })
-            //    .PrimaryKey(t => t.Id);
-            
-            //CreateTable(
-            //    "dbo.BusinessProfiles",
-            //    c => new
-            //        {
-            //            Id = c.Int(nullable: false, identity: true),
-            //            BusinessId = c.Int(nullable: false),
-            //            PropertyId = c.Int(nullable: false),
-            //            PropertyValue = c.String(maxLength: 3750),
-            //            PropertyText = c.String(),
-            //            Visibility = c.Int(nullable: false),
-            //            CreatedOnDate = c.DateTime(nullable: false),
-            //            CreatedByUserId = c.Int(nullable: false),
-            //            UpdatedOnDate = c.DateTime(nullable: false),
-            //            UpdatedByUserId = c.Int(nullable: false),
-            //            ArchivedOnDate = c.DateTime(nullable: false),
-            //            ArchivedByUserId = c.Int(nullable: false),
-            //            ExtendedVisibility = c.String(maxLength: 400, unicode: false),
-            //        })
-            //    .PrimaryKey(t => t.Id)
-            //    .ForeignKey("dbo.Businesses", t => t.BusinessId, cascadeDelete: true)
-            //    .ForeignKey("dbo.ProfileProperties", t => t.PropertyId, cascadeDelete: true)
-            //    .Index(t => t.BusinessId)
-            //    .Index(t => t.PropertyId);
+
+            CreateTable(
+                "dbo.Businesses",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        PrincipleOwnerUserId = c.Int(nullable: false),
+                        Name = c.String(),
+                        Number = c.String(maxLength: 10, fixedLength: true),
+                    })
+                .PrimaryKey(t => t.Id);
+
+            CreateTable(
+                "dbo.BusinessProfiles",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        BusinessId = c.Int(nullable: false),
+                        PropertyId = c.Int(nullable: false),
+                        PropertyValue = c.String(maxLength: 3750),
+                        PropertyText = c.String(),
+                        Visibility = c.Int(nullable: false),
+                        CreatedOnDate = c.DateTime(nullable: false),
+                        CreatedByUserId = c.Int(nullable: false),
+                        UpdatedOnDate = c.DateTime(nullable: false),
+                        UpdatedByUserId = c.Int(nullable: false),
+                        ArchivedOnDate = c.DateTime(nullable: false),
+                        ArchivedByUserId = c.Int(nullable: false),
+                        ExtendedVisibility = c.String(maxLength: 400, unicode: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Businesses", t => t.BusinessId, cascadeDelete: true)
+                .ForeignKey("dbo.ProfileProperties", t => t.PropertyId, cascadeDelete: true)
+                .Index(t => t.BusinessId)
+                .Index(t => t.PropertyId);
             
             //CreateTable(
             //    "dbo.ProfileProperties",

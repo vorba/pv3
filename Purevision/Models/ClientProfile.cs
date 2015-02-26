@@ -1,4 +1,5 @@
-namespace Purevision.Models
+
+namespace Purevision.Web.Models
 {
     using System;
     using System.Collections.Generic;

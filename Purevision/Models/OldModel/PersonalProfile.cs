@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Purevision.Models
+namespace Purevision.Web.Models.OldModel
 {
     using System;
     using System.Collections.Generic;

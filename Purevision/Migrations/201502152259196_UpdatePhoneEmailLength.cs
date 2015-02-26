@@ -1,4 +1,4 @@
-namespace Purevision.Migrations
+namespace Purevision.Web.Migrations
 {
     using System;
     using System.Data.Entity.Migrations;

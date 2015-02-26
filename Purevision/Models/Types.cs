@@ -4,7 +4,7 @@ using System.Linq;
 using System.Security.Authentication;
 using System.Web;
 
-namespace Purevision.Models
+namespace Purevision.Web.Models
 {
     public class Types
     {

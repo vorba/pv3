@@ -7,24 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Purevision.Models
+namespace Purevision.Web.Models.OldModel
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class People
+    public partial class Task
     {
-        public People()
-        {
-            this.PersonalProfiles = new HashSet<PersonalProfile>();
-        }
-    
         public int Id { get; set; }
-        public string Name { get; set; }
-        public Nullable<int> UserId { get; set; }
-        public int OrganizationId { get; set; }
-    
-        public virtual ICollection<PersonalProfile> PersonalProfiles { get; set; }
-        public virtual Organization Organization { get; set; }
     }
 }

@@ -1,8 +1,8 @@
 ﻿using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartupAttribute(typeof(Purevision.Startup))]
-namespace Purevision
+[assembly: OwinStartupAttribute(typeof(Purevision.Web.Startup))]
+namespace Purevision.Web
 {
     public partial class Startup
     {

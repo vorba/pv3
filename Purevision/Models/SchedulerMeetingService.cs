@@ -1,4 +1,6 @@
-﻿namespace Purevision.Models
+﻿using Purevision.Web.DataContexts;
+
+namespace Purevision.Web.Models
 {
     using Kendo.Mvc.UI;
     using System;
@@ -7,15 +9,15 @@
 
     public class SchedulerMeetingService : ISchedulerEventService<MeetingViewModel>
     {
-        private PurevisionModel2 db;
+        private PurevisionDb db;
 
-        public SchedulerMeetingService(PurevisionModel2 context)
+        public SchedulerMeetingService(PurevisionDb context)
         {
             db = context;
         }
 
         public SchedulerMeetingService()
-            : this(new PurevisionModel2())
+            : this(new PurevisionDb())
         {
         }
 

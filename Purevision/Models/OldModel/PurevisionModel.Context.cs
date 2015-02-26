@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Purevision.Models
+namespace Purevision.Web.Models
 {
     using System;
     using System.Data.Entity;
@@ -16,7 +16,7 @@ namespace Purevision.Models
     public partial class PurevisionEntities : DbContext
     {
         public PurevisionEntities()
-            : base("name=PurevisionEntities")
+            : base("name=Purevision2")
         {
         }
     
@@ -25,21 +25,21 @@ namespace Purevision.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<People> People { get; set; }
-        public virtual DbSet<MeetingAttendee> MeetingAttendees { get; set; }
-        public virtual DbSet<Meeting> Meetings { get; set; }
+        //public virtual DbSet<People> People { get; set; }
+        //public virtual DbSet<MeetingAttendee> MeetingAttendees { get; set; }
+        //public virtual DbSet<Meeting> Meetings { get; set; }
         public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
-        public virtual DbSet<Task> Tasks { get; set; }
-        public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<Business> Businesses { get; set; }
-        public virtual DbSet<BusinessProfile> BusinessProfiles { get; set; }
-        public virtual DbSet<PersonalProfile> PersonalProfiles { get; set; }
-        public virtual DbSet<List> Lists { get; set; }
-        public virtual DbSet<ProfileProperty> ProfileProperties { get; set; }
-        public virtual DbSet<UserProfile> UserProfiles { get; set; }
-        public virtual DbSet<Organization> Organizations { get; set; }
+        //public virtual DbSet<Task> Tasks { get; set; }
+        //public virtual DbSet<User> Users { get; set; }
+        //public virtual DbSet<Business> Businesses { get; set; }
+        //public virtual DbSet<BusinessProfile> BusinessProfiles { get; set; }
+        //public virtual DbSet<PersonalProfile> PersonalProfiles { get; set; }
+        //public virtual DbSet<List> Lists { get; set; }
+        //public virtual DbSet<ProfileProperty> ProfileProperties { get; set; }
+        //public virtual DbSet<UserProfile> UserProfiles { get; set; }
+        //public virtual DbSet<Organization> Organizations { get; set; }
     }
 }

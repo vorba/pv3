@@ -6,9 +6,11 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using Purevision.Models;
+using Purevision.Web;
+using Purevision.Web.Controllers;
+using Purevision.Web.Models;
 
-namespace Purevision.Controllers
+namespace Purevision.Web.Controllers
 {
     [Authorize]
     public class ManageController : Controller

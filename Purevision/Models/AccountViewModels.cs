@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Purevision.Models
+namespace Purevision.Web.Models
 {
     public class ExternalLoginConfirmationViewModel
     {

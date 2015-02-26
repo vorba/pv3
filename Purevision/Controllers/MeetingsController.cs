@@ -9,13 +9,14 @@ using System.Web;
 using System.Web.Mvc;
 using Kendo.Mvc.UI;
 using Kendo.Mvc.Extensions;
-using Purevision.Models;
+using Purevision.Web.DataContexts;
+using Purevision.Web.Models;
 
-namespace Purevision.Controllers
+namespace Purevision.Web.Controllers
 {
     public class MeetingsController : Controller
     {
-        private PurevisionModel2 db = new PurevisionModel2();
+        private PurevisionDb db = new PurevisionDb();
         private SchedulerMeetingService meetingService;
 
 

@@ -10,7 +10,9 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
-using Purevision.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Purevision.Web.DataContexts;
+using Purevision.Web.Models;
 
 /* References:
  * 
@@ -19,13 +21,15 @@ using Purevision.Models;
  * 
  */
 
-namespace Purevision.Controllers
+namespace Purevision.Web.Controllers
 {
 
     public class ClientsController : Controller
     {
-        private PurevisionModel2 db = new PurevisionModel2();
+        private IdentityDb identityDb = new IdentityDb();
+        private PurevisionDb db = new PurevisionDb();
 
+        private IdentityUser _identityUser;
         private User _user;
         private ClientViewModel _clientViewModel;
 
@@ -37,8 +41,9 @@ namespace Purevision.Controllers
             var userEmail = System.Web.HttpContext.Current.User.Identity.Name;
             try
             {
-                _user = db.Users.Single(user => user.Email == userEmail);
+                _identityUser = identityDb.Users.Single(user => user.Email == userEmail);
                 //_clients = db.People.Where(client => client.UserId == _user.Id);
+                _user = db.Users.Single(user => user.AspNetUserId == _identityUser.Id);
                 _clientViewModel.People = db.People.Where(client => client.UserId == _user.Id);
 
             }

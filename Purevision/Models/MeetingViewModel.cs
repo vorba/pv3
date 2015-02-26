@@ -1,4 +1,4 @@
-﻿namespace Purevision.Models
+﻿namespace Purevision.Web.Models
 {
     using Kendo.Mvc.UI;
     using System;

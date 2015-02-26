@@ -1,17 +1,15 @@
-﻿@using Purevision.Models
-@model IEnumerable<Purevision.Models.ClientViewModel>
+﻿@using Purevision.Web.Models
+@model IEnumerable<Purevision.Web.Models.ClientViewModel>
 
 @{
     ViewBag.Title = "Index";
 }
 
-@*<h2>Clients</h2>*@
-
 <br/>
+@*<div id="main">*@
+    @* Kendo UI ASP MVC PanelBar:  http://demos.telerik.com/aspnet-mvc/panelbar/index *@
 
-@* Kendo UI ASP MVC PanelBar:  http://demos.telerik.com/aspnet-mvc/panelbar/index *@
-
-@(Html.Kendo().PanelBar()
+    @(Html.Kendo().PanelBar()
         .Name("ClientPanelBar")
         .ExpandMode(PanelBarExpandMode.Single)
         .Items(items =>
@@ -26,10 +24,10 @@
             items.Add()
                 .Text("Tasks")
                 @*.Content(@<text>
-                    <p style="padding:0 1em; padding-top: 0.7em">
-                        Select a client from above to view list of scheduled tasks for that client.
-                    </p>
-                </text>);*@
+                        <p style="padding:0 1em; padding-top: 0.7em">
+                            Select a client from above to view list of scheduled tasks for that client.
+                        </p>
+                    </text>);*@
                 .LoadContentFrom("Partial", "Meetings");
             items.Add()
                 .Text("Help")
@@ -40,21 +38,20 @@
                     </p>
                 </text>);
         })
+    )
+@*</div>*@
 
 
-)
 
 
 @helper RenderClientTabbedView()
 {
-    @*<h2>Clients</h2>*@
-    
     @(Html.Kendo().TabStrip()
         .Name("ClientViewTabStrip")
         .Items(items =>
         {
             items.Add()
-                .Text("Clients")
+                .Text("<span data-bind='text: clientsTabText'>Clients</span>").Encoded(false)
                 .Selected(true)
                 .Content(
                     @<text>
@@ -108,49 +105,50 @@
 
 @helper ClientGrid()
 {
-    @(Html.Kendo().Grid<Purevision.Models.Person>()
-          .Name("grid")
-          .Columns(columns =>
-          {
-              columns.Bound(c => c.FirstName).Width(100);
-              columns.Bound(c => c.LastName).Width(130);
-              columns.Bound(c => c.Email).Width(140);
-              columns.Bound(c => c.Phone).ClientTemplate("#= (data.Phone) ? formatPhoneNumber(data.Phone) : 'none' #").Width(130);
-              columns.Bound(c => c.Comments).Hidden().Width(140);
-              columns.Bound(c => c.UserId).Hidden();
-              columns.Bound(c => c.Id).Hidden();
-              columns.Command(command =>
-              {
-                  //command.Edit();
-                  //command.Destroy();
-                  command.Custom("Archive").Click("archiveCommand");
-                  command.Custom("Detail").Click("detailCommand");
-              }).Width(90);
-          })
-          .ToolBar(toolbar => toolbar.Create())
-          //.HtmlAttributes(new { style = "height: 380px;" })
-          //.Groupable()
-          .Selectable(s => s.Mode(GridSelectionMode.Single))
-          .Events(e => e.Change("onChange").DataBound("onDataBound").DataBinding("onDataBinding"))
-          .Scrollable()
-          .Sortable()
-          //.Navigatable()
-          .Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("Edit"))
-          .Pageable(pageable => pageable
-              .Refresh(true)
-              .PageSizes(true)
-              .ButtonCount(5))
-          .DataSource(dataSource => dataSource
-              .Ajax()
-              .PageSize(20)
-              .Events(events => events.Error("error_handler"))
-              .Model(model => model.Id(c => c.Id))
-              .Create(create => create.Action("People_Create", "Clients"))
-              .Read(read => read.Action("People_Read", "Clients"))
-              .Update(update => update.Action("People_Update", "Clients"))
-              .Destroy(update => update.Action("People_Destroy", "Clients"))
-              )
+    @(Html.Kendo().Grid<Purevision.Web.Models.Person>()
+        .Name("grid")
+        .Columns(columns =>
+        {
+            columns.Bound(c => c.FirstName).Width(100);
+            columns.Bound(c => c.LastName).Width(130);
+            columns.Bound(c => c.Email).Width(140);
+            columns.Bound(c => c.Phone).ClientTemplate("#= (data.Phone) ? formatPhoneNumber(data.Phone) : 'none' #").Width(130);
+            columns.Bound(c => c.Comments).Hidden().Width(140);
+            //columns.Bound(c => c.BusinessName).Hidden();
+            columns.Bound(c => c.UserId).Hidden();
+            columns.Bound(c => c.Id).Hidden();
+            columns.Command(command =>
+            {
+                //command.Edit();
+                //command.Destroy();
+                //command.Custom("Archive").Click("archiveCommand");
+                command.Custom("Detail").Click("detailCommand");
+            }).Width(50);
+        })
+        .ToolBar(toolbar => toolbar.Create().Text("New Client"))
+        //.HtmlAttributes(new { style = "height: 380px;" })
+        //.Groupable()
+        .Selectable(s => s.Mode(GridSelectionMode.Single))
+        .Events(e => e.Change("onChange").DataBound("onDataBound").DataBinding("onDataBinding"))
+        .Scrollable()
+        .Sortable()
+        //.Navigatable()
+        .Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("Edit")) // used by Create() toolbar command
+        .Pageable(pageable => pageable
+            .Refresh(true)
+            .PageSizes(true)
+            .ButtonCount(5))
+        .DataSource(dataSource => dataSource
+            .Ajax()
+            .PageSize(20)
+            .Events(events => events.Error("error_handler"))
+            .Model(model => model.Id(c => c.Id))
+            .Create(create => create.Action("People_Create", "Clients"))
+            .Read(read => read.Action("People_Read", "Clients"))
+            .Update(update => update.Action("People_Update", "Clients"))
+            .Destroy(update => update.Action("People_Destroy", "Clients"))
         )
+    )
 }
 
 @* Window MUST be named 'detailWindow' as references by partial script *@
@@ -159,46 +157,52 @@
     .Visible(false)
     .Modal(true)
     .Draggable(true)
-    .Width(400)
-      .Content(@<text>
-                    @Html.Partial("Edit", new Person())
-                </text>)
-    //.LoadContentFrom("DetailsPartial", "Clients")
-)
+    .Width(460)
+    //.Position(settings =>
+    //    settings.Top(0).Left(500))
+    .Resizable()
+    .Content(@<text>
+        @Html.Partial("_edit", new Person())
+        </text>
+    )
+      )
 
-@*@Html.Partial("Edit", new Person())*@
-
-<script type="text/x-kendo-template" id="template">
-    <div id="details-container">
-        <form class="form-horizontal">
-            <div class="form-group">
-                <p class="control-label col-md-3">First Name </p>
-                <div class="col-md-4">
-                    <input class="k-textbox" type="text" name="FirstName" value="#= FirstName #" placeholder="First Name" />
-                </div>
-            </div>
-            @*
-            <em>#= Title #</em>
-            <dl>
-                <dt>City: #= City #</dt>
-                <dt>Address: #= Address #</dt>
-            </dl>*@
-            <div class="form-group">
-                <div class="col-md-offset-1 col-md-7">
-                    <input type="button" id="archiveButton" value="Archive" class="btn btn-default" disabled />
-                    <input type="button" id="updateButton" value="Update" class="btn btn-default" disabled />
-                    <input type="button" id="cancelButton" value="Cancel" class="btn btn-default" />
-                </div>
-            </div>
-        </form>
-    </div>
-</script>
+<style>
+    /*.k-window .k-window-content {
+        padding: 0
+        }*/
+</style>
 
 <script type="text/javascript">
 
-    //dialog = $("#window").dialog({ autoOpen: false });
+    //var viewModel;
+
+    //$(document).ready(function () {
+    //    viewModel = kendo.observable({
+    //        clientsTabText: ""
+    //});
+
+    //    //viewModel.imageSrc = viewModel.food[0].url;
+
+    //    //viewModel.spanText = "Clients";
+    //    //kendo.bind($("#main"), viewModel);
+    //});
+
+    //var viewModel = {
+    //    clientsTabText: ko.observable() // Initially blank
+    //};
+    //ko.applyBindings(viewModel);
+    //viewModel.spanText = "Clients3";
+
+    //$("#test").innerHTML = "Test2";
+    //document.getElementById("test2").innerHTML = "Test2";
+    //document.getElementById("test").innerHTML = "Test3";
 
     function error_handler(e) {
+        alert("Error: " + e.status);
+        if (e.xhr) {
+            alert("Error XHR status: " + e.xhr.status);
+        }
         if (e.errors) {
             var message = "Errors:\n";
             $.each(e.errors, function (key, value) {
@@ -211,51 +215,23 @@
             alert(message);
         }
     }
-
-    // Manage Tasks
-
-    var detailsTemplate = kendo.template($("#template").html());
-
-    //var detailDataItemUid;
-
+    
     function detailCommand(e) {
+        var window = $("#detailWindow");
+        var kWnd = window.data("kendoWindow");
+        var data = this.dataItem($(e.target).closest("tr"));
+
         //e.preventDefault();
-        var wnd = $("#detailWindow").data("kendoWindow");
-        var detailDataItem = this.dataItem($(e.target).closest("tr"));
 
-        //detailDataItemUid = detailDataItem.uid;
-        //alert("detailDataItem " + JSON.stringify(detailDataItem.uid));
-
-        //wnd.content(detailsTemplate(detailDataItem));
-        //wnd.refresh({
-        //    url: "/Clients/Edit",
-        //    data: { id: detailDataItem.Id }
-        //});
-
-        @*wnd.content(@Html.Partial("Edit", new Person()));*@
-
-        kendo.bind($("#detailWindow"), detailDataItem);
-        //dialog.dialog("open");
-
-        wnd.center().open();
-    } // Manage Tasks -- END
+        kendo.bind(window, data);
+        kWnd.center().open();
+    }
 
     function archiveCommand(e) {
-        e.preventDefault();
-
-        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
-
-        // get row id
-        var id = this.dataItem($(e.target).closest("tr")).Id;
-        //alert(JSON.stringify(dataItem.Id))
-
-        //wnd.content(detailsTemplate(dataItem));
-        //wnd.refresh({
-        //    url: "/Clients/Delete",
-        //    data: { id: id }
-        //});
-        wnd.center().open();
-    } // Manage Tasks -- END
+        alert("No code");
+        // TODO:  implement archiving
+        // NOTES: delete might be a feature added for admin roles
+    }
 
     function onChange(e)
     {
@@ -271,7 +247,10 @@
         //Getting selected item
         var item = grid.dataItem(grid.select());
         //accessing selected rows data
-        alert(item.Id);
+        //alert(item.FirstName);
+
+        //viewModel.clientsTabText = "Clients" + ": " + item.LastName.trim() + ", " + item.FirstName;
+        //kendo.bind($("#main"), viewModel);
     }
 
     function formatPhoneNumber(phoneNumber) {

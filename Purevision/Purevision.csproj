@@ -11,8 +11,8 @@
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Purevision</RootNamespace>
-    <AssemblyName>Purevision</AssemblyName>
+    <RootNamespace>Purevision.Web</RootNamespace>
+    <AssemblyName>Purevision.Web</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
@@ -166,9 +166,72 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MeetingsController.cs" />
+    <Compile Include="DataContexts\IdentityMigrations\201502242244484_InitialCreate.cs" />
+    <Compile Include="DataContexts\IdentityMigrations\201502242244484_InitialCreate.Designer.cs">
+      <DependentUpon>201502242244484_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\IdentityMigrations\Configuration.cs" />
+    <Compile Include="DataContexts\PurevisionMigrations\201502242249203_InitialCreate.cs" />
+    <Compile Include="DataContexts\PurevisionMigrations\201502242249203_InitialCreate.Designer.cs">
+      <DependentUpon>201502242249203_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\PurevisionMigrations\201502250402327_AddPersonBusinessNameNumber.cs" />
+    <Compile Include="DataContexts\PurevisionMigrations\201502250402327_AddPersonBusinessNameNumber.Designer.cs">
+      <DependentUpon>201502250402327_AddPersonBusinessNameNumber.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\PurevisionMigrations\201502250435122_AddPersonProperties10.cs" />
+    <Compile Include="DataContexts\PurevisionMigrations\201502250435122_AddPersonProperties10.Designer.cs">
+      <DependentUpon>201502250435122_AddPersonProperties10.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\PurevisionMigrations\201502250718236_AddPersonDatesNullable.cs" />
+    <Compile Include="DataContexts\PurevisionMigrations\201502250718236_AddPersonDatesNullable.Designer.cs">
+      <DependentUpon>201502250718236_AddPersonDatesNullable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\PurevisionMigrations\201502252101522_AddPersonBookkeepingType.cs" />
+    <Compile Include="DataContexts\PurevisionMigrations\201502252101522_AddPersonBookkeepingType.Designer.cs">
+      <DependentUpon>201502252101522_AddPersonBookkeepingType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\PurevisionMigrations\201502252211206_AddPersonBookkeepingProcessType.cs" />
+    <Compile Include="DataContexts\PurevisionMigrations\201502252211206_AddPersonBookkeepingProcessType.Designer.cs">
+      <DependentUpon>201502252211206_AddPersonBookkeepingProcessType.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\PurevisionMigrations\201502252215298_AddPersonBookkeepingProcessType2.cs" />
+    <Compile Include="DataContexts\PurevisionMigrations\201502252215298_AddPersonBookkeepingProcessType2.Designer.cs">
+      <DependentUpon>201502252215298_AddPersonBookkeepingProcessType2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\PurevisionMigrations\201502260058430_AddPersonBookkeepingEnumsX7.cs" />
+    <Compile Include="DataContexts\PurevisionMigrations\201502260058430_AddPersonBookkeepingEnumsX7.Designer.cs">
+      <DependentUpon>201502260058430_AddPersonBookkeepingEnumsX7.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\PurevisionMigrations\201502260105255_AddPersonBookkeepingEnumsX7_allowNulls.cs" />
+    <Compile Include="DataContexts\PurevisionMigrations\201502260105255_AddPersonBookkeepingEnumsX7_allowNulls.Designer.cs">
+      <DependentUpon>201502260105255_AddPersonBookkeepingEnumsX7_allowNulls.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\PurevisionMigrations\201502260326016_AddPersonBusinessType_DisallowNull.cs" />
+    <Compile Include="DataContexts\PurevisionMigrations\201502260326016_AddPersonBusinessType_DisallowNull.Designer.cs">
+      <DependentUpon>201502260326016_AddPersonBusinessType_DisallowNull.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\PurevisionMigrations\201502260356234_AddPersonBusinessType_Enums_DisallowNulls.cs" />
+    <Compile Include="DataContexts\PurevisionMigrations\201502260356234_AddPersonBusinessType_Enums_DisallowNulls.Designer.cs">
+      <DependentUpon>201502260356234_AddPersonBusinessType_Enums_DisallowNulls.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\PurevisionMigrations\201502260444400_AddPersonBusinessType_EnumBusinessType_AllowNull.cs" />
+    <Compile Include="DataContexts\PurevisionMigrations\201502260444400_AddPersonBusinessType_EnumBusinessType_AllowNull.Designer.cs">
+      <DependentUpon>201502260444400_AddPersonBusinessType_EnumBusinessType_AllowNull.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\PurevisionMigrations\201502260452580_AddPersonBusinessType_Enums_AllowNulls.cs" />
+    <Compile Include="DataContexts\PurevisionMigrations\201502260452580_AddPersonBusinessType_Enums_AllowNulls.Designer.cs">
+      <DependentUpon>201502260452580_AddPersonBusinessType_Enums_AllowNulls.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\PurevisionMigrations\201502261411480_AddPersonBusinessType_Enums_DisallowNulls1.cs" />
+    <Compile Include="DataContexts\PurevisionMigrations\201502261411480_AddPersonBusinessType_Enums_DisallowNulls1.Designer.cs">
+      <DependentUpon>201502261411480_AddPersonBusinessType_Enums_DisallowNulls1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataContexts\PurevisionMigrations\Configuration.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\EnumHelpers.cs" />
     <Compile Include="Migrations\201502130405104_Initial.cs" />
     <Compile Include="Migrations\201502130405104_Initial.Designer.cs">
       <DependentUpon>201502130405104_Initial.cs</DependentUpon>
@@ -191,82 +254,33 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\AspNetRole.cs">
-      <DependentUpon>PurevisionModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\AspNetUser.cs">
-      <DependentUpon>PurevisionModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\AspNetUserClaim.cs">
-      <DependentUpon>PurevisionModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\AspNetUserLogin.cs">
-      <DependentUpon>PurevisionModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Business.cs">
-      <DependentUpon>PurevisionModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\BusinessProfile.cs">
-      <DependentUpon>PurevisionModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Client.cs" />
     <Compile Include="Models\ClientProfile.cs" />
     <Compile Include="Models\ClientViewModel.cs" />
     <Compile Include="Models\Company.cs" />
     <Compile Include="Models\DateGreaterThan.cs" />
+    <Compile Include="DataContexts\IdentityDb.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\List.cs">
-      <DependentUpon>PurevisionModel.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Models\Enums.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\Meeting.cs">
-      <DependentUpon>PurevisionModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\MeetingAttendee.cs">
-      <DependentUpon>PurevisionModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\MeetingViewModel.cs" />
-    <Compile Include="Models\Organization.cs">
-      <DependentUpon>PurevisionModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\People.cs">
-      <DependentUpon>PurevisionModel.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Models\AspNetRole.cs" />
+    <Compile Include="Models\AspNetUser.cs" />
+    <Compile Include="Models\AspNetUserClaim.cs" />
+    <Compile Include="Models\AspNetUserLogin.cs" />
+    <Compile Include="Models\Business.cs" />
+    <Compile Include="Models\BusinessProfile.cs" />
+    <Compile Include="Models\List.cs" />
+    <Compile Include="Models\Meeting.cs" />
+    <Compile Include="Models\MeetingAttendee.cs" />
+    <Compile Include="Models\Organization.cs" />
+    <Compile Include="Models\ProfileProperty.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\UserProfile.cs" />
     <Compile Include="Models\Person.cs" />
-    <Compile Include="Models\PersonalProfile.cs">
-      <DependentUpon>PurevisionModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ProfileProperty.cs">
-      <DependentUpon>PurevisionModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\PurevisionModel.Context.cs">
-      <DependentUpon>PurevisionModel.Context.tt</DependentUpon>
-      <SubType>Code</SubType>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="Models\PurevisionModel.cs">
-      <DependentUpon>PurevisionModel.tt</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="Models\PurevisionModel.Designer.cs">
-      <DependentUpon>PurevisionModel.edmx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="Models\PurevisionModel2.cs" />
+    <Compile Include="DataContexts\PurevisionDb.cs" />
     <Compile Include="Models\SchedulerMeetingService.cs" />
-    <Compile Include="Models\Task.cs">
-      <DependentUpon>PurevisionModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Types.cs" />
-    <Compile Include="Models\User.cs">
-      <DependentUpon>PurevisionModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\UserProfile.cs">
-      <DependentUpon>PurevisionModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -281,20 +295,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\PurevisionModel.Context.tt">
-      <DependentUpon>PurevisionModel.edmx</DependentUpon>
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>PurevisionModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\PurevisionModel.edmx.diagram">
-      <DependentUpon>PurevisionModel.edmx</DependentUpon>
-    </Content>
-    <Content Include="Models\PurevisionModel.edmx.sql" />
-    <Content Include="Models\PurevisionModel.tt">
-      <DependentUpon>PurevisionModel.edmx</DependentUpon>
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>PurevisionModel.cs</LastGenOutput>
-    </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -340,7 +340,7 @@
     <Content Include="Views\Clients\Delete.cshtml" />
     <Content Include="Views\Clients\Details.cshtml" />
     <Content Include="Views\Clients\Edit.cshtml" />
-    <Content Include="Views\Clients\Index.cshtml" />
+    <Content Include="Views\Clients\Index2.cshtml" />
     <Content Include="Views\Meetings\Create.cshtml" />
     <Content Include="Views\Meetings\Delete.cshtml" />
     <Content Include="Views\Meetings\Details.cshtml" />
@@ -370,6 +370,12 @@
     <Content Include="Views\Shared\EditorTemplates\MultiLineText.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\PhoneNumber.cshtml" />
     <Content Include="Views\Meetings\_meetingsPartial.cshtml" />
+    <Content Include="Views\Clients\_edit2.cshtml" />
+    <Content Include="Views\Clients\Index.cshtml" />
+    <Content Include="Views\Clients\_edit.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\BookkeepingProcessType2.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Enum.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Enum.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
@@ -390,12 +396,51 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EntityDeploy Include="Models\PurevisionModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>PurevisionModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-  </ItemGroup>
-  <ItemGroup>
+    <EmbeddedResource Include="DataContexts\IdentityMigrations\201502242244484_InitialCreate.resx">
+      <DependentUpon>201502242244484_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataContexts\PurevisionMigrations\201502242249203_InitialCreate.resx">
+      <DependentUpon>201502242249203_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataContexts\PurevisionMigrations\201502250402327_AddPersonBusinessNameNumber.resx">
+      <DependentUpon>201502250402327_AddPersonBusinessNameNumber.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataContexts\PurevisionMigrations\201502250435122_AddPersonProperties10.resx">
+      <DependentUpon>201502250435122_AddPersonProperties10.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataContexts\PurevisionMigrations\201502250718236_AddPersonDatesNullable.resx">
+      <DependentUpon>201502250718236_AddPersonDatesNullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataContexts\PurevisionMigrations\201502252101522_AddPersonBookkeepingType.resx">
+      <DependentUpon>201502252101522_AddPersonBookkeepingType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataContexts\PurevisionMigrations\201502252211206_AddPersonBookkeepingProcessType.resx">
+      <DependentUpon>201502252211206_AddPersonBookkeepingProcessType.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataContexts\PurevisionMigrations\201502252215298_AddPersonBookkeepingProcessType2.resx">
+      <DependentUpon>201502252215298_AddPersonBookkeepingProcessType2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataContexts\PurevisionMigrations\201502260058430_AddPersonBookkeepingEnumsX7.resx">
+      <DependentUpon>201502260058430_AddPersonBookkeepingEnumsX7.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataContexts\PurevisionMigrations\201502260105255_AddPersonBookkeepingEnumsX7_allowNulls.resx">
+      <DependentUpon>201502260105255_AddPersonBookkeepingEnumsX7_allowNulls.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataContexts\PurevisionMigrations\201502260326016_AddPersonBusinessType_DisallowNull.resx">
+      <DependentUpon>201502260326016_AddPersonBusinessType_DisallowNull.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataContexts\PurevisionMigrations\201502260356234_AddPersonBusinessType_Enums_DisallowNulls.resx">
+      <DependentUpon>201502260356234_AddPersonBusinessType_Enums_DisallowNulls.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataContexts\PurevisionMigrations\201502260444400_AddPersonBusinessType_EnumBusinessType_AllowNull.resx">
+      <DependentUpon>201502260444400_AddPersonBusinessType_EnumBusinessType_AllowNull.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataContexts\PurevisionMigrations\201502260452580_AddPersonBusinessType_Enums_AllowNulls.resx">
+      <DependentUpon>201502260452580_AddPersonBusinessType_Enums_AllowNulls.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataContexts\PurevisionMigrations\201502261411480_AddPersonBusinessType_Enums_DisallowNulls1.resx">
+      <DependentUpon>201502261411480_AddPersonBusinessType_Enums_DisallowNulls1.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201502130405104_Initial.resx">
       <DependentUpon>201502130405104_Initial.cs</DependentUpon>
     </EmbeddedResource>
@@ -411,6 +456,9 @@
     <EmbeddedResource Include="Migrations\201502152259196_UpdatePhoneEmailLength.resx">
       <DependentUpon>201502152259196_UpdatePhoneEmailLength.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Migrations\Identity\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
