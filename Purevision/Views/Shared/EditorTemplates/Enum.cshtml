@@ -1,0 +1,28 @@
+﻿@using System.Web.UI.WebControls
+@model Enum
+
+@if (EnumHelper.IsValidForEnumHelper(ViewData.ModelMetadata))
+{
+    ModelMetadata meta = ModelMetadata.FromLambdaExpression(model => model, ViewData);
+    if (meta.IsNullableValueType)
+    {
+        @Html.EnumDropDownListFor(model => model, ViewData.ModelMetadata.Watermark,
+                 htmlAttributes: new { @class = "form-control", style = "padding: 0em .33em; height: 30px; max-width: 174px;" }
+            //,optionLabel: ViewData.ModelMetadata.Watermark
+            );
+        //Purevision.Web.Helpers.EnumHelpers.EnumDropDownListFor(@Html, model => model
+        //         ,htmlAttributes: new { @class = "form-control", style = "padding: 0em .33em; height: 30px; max-width: 174px;" }
+        //         ,placeHolder: ViewData.ModelMetadata.Watermark
+        //    );
+    }
+    else
+    {
+        @Html.EnumDropDownListFor(model => model,
+            htmlAttributes: new { @class = "form-control", style = "padding: 0em .33em; height: 30px; max-width: 174px;" }
+            );
+    }
+}
+else
+{
+    @Html.TextBoxFor(model => model, htmlAttributes: new { @class = "form-control" })
+}

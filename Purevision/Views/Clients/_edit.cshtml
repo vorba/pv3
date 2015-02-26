@@ -1,0 +1,345 @@
+﻿@model Purevision.Web.Models.Person
+@using Newtonsoft.Json
+@{
+    ViewBag.Title = "Edit";
+}
+
+@*@{
+    var _model = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model));
+}*@
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.UserId)
+
+    @(Html.Kendo().PanelBar()
+        .Name("ClientEditPanelBar")
+        .ExpandMode(PanelBarExpandMode.Single)
+        .Items(items =>
+        {
+            items.Add()
+                .Text("Personal")
+                //.Selected(true)
+                .Expanded(true)
+                .Content(@<text>
+                    @RenderClientPersonalProfileView()
+                </text>);
+            items.Add()
+                .Text("Business")
+                //.Expanded(true)
+                //.Selected(true)
+                .Content(@<text>
+                    @RenderClientBusinessProfileView()
+                </text>);
+        })
+)
+
+    <hr />
+    <div class="form-group">
+        <div class="col-md-7 pull-right">
+            @*<input type="button" id="archiveButton" value="Archive" class="btn btn-default" disabled />*@
+            <input type="button" id="cancelButton" value="Cancel" class="btn btn-default" />
+            <input type="button" id="updateButton" value="Update" class="btn btn-primary" />
+        </div>
+    </div>
+} 
+
+@helper RenderClientPersonalProfileView()
+{
+    <div class="form-horizontal">
+        <br />
+        @*<p>Name: <span data-bind="text: name"></span></p>
+            <p>Name: <input data-bind="value: name" /></p>*@
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.FirstName)
+                @Html.ValidationMessageFor(model => model.FirstName)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.LastName)
+                @Html.ValidationMessageFor(model => model.LastName)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-4">
+                @(Html.Kendo().MaskedTextBoxFor(m => m.Phone)
+                    .Name("Phone")
+                    .Mask("(000) 000-0000")
+                )
+                @Html.ValidationMessageFor(m => m.Phone)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.Email)
+                @Html.ValidationMessageFor(model => model.Email)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Comments, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.Comments)
+                @Html.ValidationMessageFor(model => model.Comments)
+            </div>
+        </div>
+    </div>
+}
+
+@helper RenderClientBusinessProfileView()
+{
+    <br />
+    <div class="container">
+        <form>
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.BusinessName, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.BusinessName)
+                        @Html.ValidationMessageFor(model => model.BusinessName)
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.BusinessNumber, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.BusinessNumber)
+                        @Html.ValidationMessageFor(model => model.BusinessNumber)
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ProvincialSalesTaxNumber, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.ProvincialSalesTaxNumber)
+                        @Html.ValidationMessageFor(model => model.ProvincialSalesTaxNumber)
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.BusinessType, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.BusinessType)
+                        @Html.ValidationMessageFor(model => model.BusinessType)
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ReferredBy, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.ReferredBy)
+                        @Html.ValidationMessageFor(model => model.ReferredBy)
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.BookkeepingProcessType, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.BookkeepingProcessType)
+                        @Html.ValidationMessageFor(model => model.BookkeepingProcessType)
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.SpecialistRequired, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.SpecialistRequired)
+                        @Html.ValidationMessageFor(model => model.SpecialistRequired)
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.SpecialistAssigned, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.SpecialistAssigned)
+                        @Html.ValidationMessageFor(model => model.SpecialistAssigned)
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.MaintenanceBookkeeperAssigned, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.MaintenanceBookkeeperAssigned)
+                        @Html.ValidationMessageFor(model => model.MaintenanceBookkeeperAssigned)
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ProcessingRequiredFrom, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.ProcessingRequiredFrom)
+                        @Html.ValidationMessageFor(model => model.ProcessingRequiredFrom)
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ProcessingFrequency, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.ProcessingFrequency)
+                        @Html.ValidationMessageFor(model => model.ProcessingFrequency)
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.AgreementSignedOn, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.AgreementSignedOn)
+                        @*@(Html.Kendo().DatePickerFor(model => model.AgreementSignedOn)
+                    .Name("AgreementSignedOn")
+                    .Value(DateTime.Now)
+                    )*@
+                        @Html.ValidationMessageFor(model => model.AgreementSignedOn)
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.BusinessConsentFormSignedOn, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.BusinessConsentFormSignedOn)
+                        @Html.ValidationMessageFor(model => model.BusinessConsentFormSignedOn)
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.RecordOfEmploymentFormSignedOn, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.RecordOfEmploymentFormSignedOn)
+                        @Html.ValidationMessageFor(model => model.RecordOfEmploymentFormSignedOn)
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.TelpayFormSignedOn, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.TelpayFormSignedOn)
+                        @Html.ValidationMessageFor(model => model.TelpayFormSignedOn)
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ReturnCorrespondance, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.ReturnCorrespondance)
+                        @Html.ValidationMessageFor(model => model.ReturnCorrespondance)
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ChklistCorrespondance, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.ChklistCorrespondance)
+                        @Html.ValidationMessageFor(model => model.ChklistCorrespondance)
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.ReportCorrespondance, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.ReportCorrespondance)
+                        @Html.ValidationMessageFor(model => model.ReportCorrespondance)
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.InvoiceCorrespondance, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.InvoiceCorrespondance)
+                        @Html.ValidationMessageFor(model => model.InvoiceCorrespondance)
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <style type="text/css">
+        input#BusinessName {
+            width: 100%;
+        }
+        div#ClientEditPanelBar-2.k-content
+        {
+            /*border-width: 0;*/
+            padding-right: 20px;
+        }
+    </style>
+}
+
+
+
+
+
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        }
+
+        <script type="text/javascript">
+
+            //$(function () {
+            //});
+    @*var vm = ko.mapping.fromJS('@Html.Raw(_model)');
+    var vm = {
+        name: ko.observable("Test")
+    };
+    ko.applyBindings(vm);*@
+
+            // bind controls; refer to http://docs.telerik.com/kendo-ui/framework/mvvm/overview
+            $("#detailWindow [name]").each(function () {
+                var name = $(this).attr("name");
+                $(this).attr("data-bind", "value:" + name);
+            });
+
+            $(document).ready(function (e) {
+
+                var grid = $("#grid").data("kendoGrid");
+                var wnd = $("#detailWindow");
+
+                $("#archiveButton").click(function (e) {
+                    alert("Feature coming soon...");
+                    wnd.data("kendoWindow").close();
+                });
+
+                $("#updateButton").click(function (e) {
+                    grid.saveChanges();
+                    wnd.data("kendoWindow").close();
+                });
+
+                $("#cancelButton").click(function (e) {
+                    wnd.data("kendoWindow").close();
+                });
+
+                //$("#refresh").click(function (e) {
+                //    window.data("kendoWindow").refresh();
+                //});
+
+                //$("#center").click(function (e) {
+                //    window.data("kendoWindow").center();
+                //});
+
+                //$("#pin").click(function (e) {
+                //    window.data("kendoWindow").pin();
+                //});
+
+                //$("#unpin").click(function (e) {
+                //    window.data("kendoWindow").unpin();
+                //});
+            });
+
+            function onClick(e) {
+                alert(this.Name);
+                var wnd = $("#ClientDetail").data("kendoWindow");
+                wnd.close();
+                //        alert("test");
+                return;
+            }
+        </script>

@@ -1,0 +1,10 @@
+﻿@model Purevision.Web.Models.Enums.BookkeepingProcessType
+@using Purevision.Web.Models
+@using Purevision.Web.Helpers
+@{
+    var items = typeof(Enums.BookkeepingProcessType).GetItems();
+}
+@*@Html.DropDownListFor(model => model, items, new { @class = "k-dropdown", placeholder = ViewData.ModelMetadata.Watermark })*@
+@*@Html.EnumDropDownListFor(model => model, new { @class = "form-control" })*@
+@Html.Kendo().DropDownListFor(m => Model).BindTo(EnumHelper.GetSelectList(typeof(Enums.BookkeepingProcessType)))
+@*@Html.Kendo().DropDownListFor(model => model).BindTo(items)*@

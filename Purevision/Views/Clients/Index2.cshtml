@@ -1,0 +1,318 @@
+﻿@using Purevision.Web.Models
+@model IEnumerable<Purevision.Web.Models.ClientViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@*<h2>Clients</h2>*@
+
+<br/>
+
+@* Kendo UI ASP MVC PanelBar:  http://demos.telerik.com/aspnet-mvc/panelbar/index *@
+
+@(Html.Kendo().PanelBar()
+        .Name("ClientPanelBar")
+        .ExpandMode(PanelBarExpandMode.Single)
+        .Items(items =>
+        {
+            items.Add()
+                .Text("<strong>Clients</strong>").Encoded(false)
+                //.Selected(true)
+                .Expanded(true)
+                .Content(@<text>
+                    @RenderClientTabbedView()
+                </text>);
+            items.Add()
+                .Text("Tasks")
+                @*.Content(@<text>
+                    <p style="padding:0 1em; padding-top: 0.7em">
+                        Select a client from above to view list of scheduled tasks for that client.
+                    </p>
+                </text>);*@
+                .LoadContentFrom("Partial", "Meetings");
+            items.Add()
+                .Text("Help")
+                .Content(@<text>
+                    <p style="padding:0 1em; padding-top: 0.7em">
+                        Manage and select a client from the "Clients" tray, then select Tasks tray to view and manage client tasks.
+                        @*<a href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more…</a>*@
+                    </p>
+                </text>);
+        })
+
+
+)
+
+
+@helper RenderClientTabbedView()
+{
+    @*<h2>Clients</h2>*@
+    
+    @(Html.Kendo().TabStrip()
+        .Name("ClientViewTabStrip")
+        .Items(items =>
+        {
+            items.Add()
+                .Text("Clients")
+                .Selected(true)
+                .Content(
+                    @<text>
+                         @ClientGrid()
+                     </text>)
+                .ContentHtmlAttributes(new { style = "min-height: 200px" });
+            @*items.Add()
+                .Text("HTML")
+                .Content(
+                    @<text>
+                        @ClientView()
+                    </text>)
+                .ContentHtmlAttributes(new { style = "min-height: 200px" });*@
+        })
+    )
+}
+
+@*@helper ClientView() {
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new {id = item.Id}) |
+                    @Html.ActionLink("Details", "Details", new {id = item.Id}) |
+                    @Html.ActionLink("Delete", "Delete", new {id = item.Id})
+                </td>
+            </tr>
+        }
+    </table>
+    }*@
+
+@helper ClientGrid()
+{
+    @(Html.Kendo().Grid<Purevision.Web.Models.Person>()
+          .Name("grid")
+          .Columns(columns =>
+          {
+              columns.Bound(c => c.FirstName).Width(100);
+              columns.Bound(c => c.LastName).Width(130);
+              columns.Bound(c => c.Email).Width(140);
+              columns.Bound(c => c.Phone).ClientTemplate("#= (data.Phone) ? formatPhoneNumber(data.Phone) : 'none' #").Width(130);
+              columns.Bound(c => c.Comments).Hidden().Width(140);
+              columns.Bound(c => c.UserId).Hidden();
+              columns.Bound(c => c.Id).Hidden();
+              columns.Command(command =>
+              {
+                  //command.Edit();
+                  //command.Destroy();
+                  command.Custom("Archive").Click("archiveCommand");
+                  command.Custom("Detail").Click("detailCommand");
+              }).Width(90);
+          })
+          .ToolBar(toolbar => toolbar.Create())
+          //.HtmlAttributes(new { style = "height: 380px;" })
+          //.Groupable()
+          .Selectable(s => s.Mode(GridSelectionMode.Single))
+          .Events(e => e.Change("onChange").DataBound("onDataBound").DataBinding("onDataBinding"))
+          .Scrollable()
+          .Sortable()
+          //.Navigatable()
+          .Editable(editable => editable.Mode(GridEditMode.PopUp).TemplateName("Edit"))
+          .Pageable(pageable => pageable
+              .Refresh(true)
+              .PageSizes(true)
+              .ButtonCount(5))
+          .DataSource(dataSource => dataSource
+              .Ajax()
+              .PageSize(20)
+              .Events(events => events.Error("error_handler"))
+              .Model(model => model.Id(c => c.Id))
+              .Create(create => create.Action("People_Create", "Clients"))
+              .Read(read => read.Action("People_Read", "Clients"))
+              .Update(update => update.Action("People_Update", "Clients"))
+              .Destroy(update => update.Action("People_Destroy", "Clients"))
+              )
+        )
+}
+
+@* Window MUST be named 'detailWindow' as references by partial script *@
+@(Html.Kendo().Window().Name("detailWindow")
+    .Title("Client Details")
+    .Visible(false)
+    .Modal(true)
+    .Draggable(true)
+    .Width(400)
+      .Content(@<text>
+                    @Html.Partial("Edit", new Person())
+                </text>)
+    //.LoadContentFrom("DetailsPartial", "Clients")
+)
+
+@*@Html.Partial("Edit", new Person())*@
+
+<script type="text/x-kendo-template" id="template">
+    <div id="details-container">
+        <form class="form-horizontal">
+            <div class="form-group">
+                <p class="control-label col-md-3">First Name </p>
+                <div class="col-md-4">
+                    <input class="k-textbox" type="text" name="FirstName" value="#= FirstName #" placeholder="First Name" />
+                </div>
+            </div>
+            @*
+            <em>#= Title #</em>
+            <dl>
+                <dt>City: #= City #</dt>
+                <dt>Address: #= Address #</dt>
+            </dl>*@
+            <div class="form-group">
+                <div class="col-md-offset-1 col-md-7">
+                    <input type="button" id="archiveButton" value="Archive" class="btn btn-default" disabled />
+                    <input type="button" id="updateButton" value="Update" class="btn btn-default" disabled />
+                    <input type="button" id="cancelButton" value="Cancel" class="btn btn-default" />
+                </div>
+            </div>
+        </form>
+    </div>
+</script>
+
+<script type="text/javascript">
+
+    //dialog = $("#window").dialog({ autoOpen: false });
+
+    function error_handler(e, status) {
+        alert(status);
+        alert(JSON.stringify(e.errors));
+        if (e.errors) {
+            var message = "Errors:\n";
+            $.each(e.errors, function (key, value) {
+                if ('errors' in value) {
+                    $.each(value.errors, function () {
+                        message += this + "\n";
+                    });
+                }
+            });
+            alert(message);
+        }
+    }
+
+    // Manage Tasks
+
+    var detailsTemplate = kendo.template($("#template").html());
+
+    //var detailDataItemUid;
+
+    function detailCommand(e) {
+        //e.preventDefault();
+        var wnd = $("#detailWindow").data("kendoWindow");
+        var detailDataItem = this.dataItem($(e.target).closest("tr"));
+
+        //detailDataItemUid = detailDataItem.uid;
+        //alert("detailDataItem " + JSON.stringify(detailDataItem.uid));
+
+        //wnd.content(detailsTemplate(detailDataItem));
+        //wnd.refresh({
+        //    url: "/Clients/Edit",
+        //    data: { id: detailDataItem.Id }
+        //});
+
+        @*wnd.content(@Html.Partial("Edit", new Person()));*@
+
+        kendo.bind($("#detailWindow"), detailDataItem);
+        //dialog.dialog("open");
+
+        wnd.center().open();
+    } // Manage Tasks -- END
+
+    function archiveCommand(e) {
+        e.preventDefault();
+
+        var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+
+        // get row id
+        var id = this.dataItem($(e.target).closest("tr")).Id;
+        //alert(JSON.stringify(dataItem.Id))
+
+        //wnd.content(detailsTemplate(dataItem));
+        //wnd.refresh({
+        //    url: "/Clients/Delete",
+        //    data: { id: id }
+        //});
+        wnd.center().open();
+    } // Manage Tasks -- END
+
+    function onChange(e)
+    {
+        var selected = $.map(this.select(), function (item) {
+            return $(item).text();
+            //return $(item);
+        });
+        //alert(selected);
+        //alert(selected.Id);
+
+        //Selecting Grid
+        var grid = $("#grid").data("kendoGrid");
+        //Getting selected item
+        var item = grid.dataItem(grid.select());
+        //accessing selected rows data
+        alert(item.Id);
+    }
+
+    function formatPhoneNumber(phoneNumber) {
+
+        // avoid reformatting as formatting returned from edit
+        if (phoneNumber.substring(0, 1) == "(") return phoneNumber;
+
+        var area = phoneNumber.substring(0, 3);     //416
+        var nxx = phoneNumber.substring(3, 6);      //555
+        var station = phoneNumber.substring(6);     //1234
+
+        //should return (416) 555-1234
+        return kendo.format("({0}) {1}-{2}", area, nxx, station);
+    }
+
+    // panel bar events;  Ref: http://docs.telerik.com/kendo-ui/aspnet-mvc/helpers/panelbar/overview
+
+    function panelbar_collapse() {
+        //Handle the collapse event
+
+        // Notice that the Name() of the panelbar is used to get its client-side instance
+        var panelbar = $("#ClientPanelBar").data("kendoPanelBar");
+    }
+
+    function panelbar_expand() {
+        //Handle the expand event
+
+        // Notice that the Name() of the panelbar is used to get its client-side instance
+        var panelbar = $("#ClientPanelBar").data("kendoPanelBar");
+    }
+
+    function onDataBound(arg) {
+        //kendoConsole.log("Grid data bound");
+        //alert("Grid data bound.");
+    }
+
+    function onDataBinding(arg) {
+        //kendoConsole.log("Grid data binding");
+        //alert("Grid data binding...");
+    }
+
+</script>
