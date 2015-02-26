@@ -1,5 +1,5 @@
 ﻿@using System.Web.UI.WebControls
-@model IEnumerable<Purevision.Models.Meeting>
+@model IEnumerable<Purevision.Web.Models.Meeting>
 
 @{
     ViewBag.Title = "Index";
@@ -118,7 +118,7 @@
 }
 
 @helper RenderMeetingScheduler() {
-@(Html.Kendo().Scheduler<Purevision.Models.MeetingViewModel>()
+@(Html.Kendo().Scheduler<Purevision.Web.Models.MeetingViewModel>()
     .Name("MeetingSchedule")
     .Date(new DateTime(2014, 12, 30))
     .StartTime(new DateTime(2015, 12, 30, 7, 00, 00))
