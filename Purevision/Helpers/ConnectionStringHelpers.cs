@@ -15,8 +15,10 @@ namespace Purevision.Web.Helpers
             {
                 case "":
                     return ConfigurationManager.ConnectionStrings["DefaultCloudStage"].ConnectionString;
-                default:
+                case "test":
                     return ConfigurationManager.ConnectionStrings["DefaultLocalDev"].ConnectionString;
+                default:
+                    return ConfigurationManager.ConnectionStrings["DefaultCloudStage"].ConnectionString;
             }
 
         }
