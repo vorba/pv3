@@ -10,6 +10,7 @@ namespace Purevision.Controllers
     {
         public ActionResult Index()
         {
+            ViewBag.HostName = System.Net.Dns.GetHostName();
             return View();
         }
 

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Web.Hosting;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Purevision.Web.Helpers;
 using Purevision.Web.Models;
 
 namespace Purevision.Web.DataContexts
@@ -13,8 +14,9 @@ namespace Purevision.Web.DataContexts
     {
         public IdentityDb()
 //            : base("Purevision2", throwIfV1Schema: false)
-            : base("Purevision")
+            : base("DefaultLocalDev")
         {
+            Database.Connection.ConnectionString = ConnectionStringHelpers.GetHostBasedConnectionString();
         }
 
         public static IdentityDb Create()

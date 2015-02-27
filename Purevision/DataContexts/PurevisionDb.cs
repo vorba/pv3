@@ -1,3 +1,6 @@
+using System.Configuration;
+using Microsoft.Ajax.Utilities;
+using Purevision.Web.Helpers;
 using Purevision.Web.Models;
 
 namespace Purevision.Web.DataContexts
@@ -10,8 +13,9 @@ namespace Purevision.Web.DataContexts
     public partial class PurevisionDb : DbContext
     {
         public PurevisionDb()
-            : base("name=Purevision")
+            : base("name=DefaultLocalDev")
         {
+            Database.Connection.ConnectionString = ConnectionStringHelpers.GetHostBasedConnectionString();
         }
 
         //public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
