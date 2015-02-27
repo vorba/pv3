@@ -13,10 +13,10 @@ namespace Purevision.Web.Helpers
         {
             switch (System.Net.Dns.GetHostName())
             {
-                case "":
-                    return ConfigurationManager.ConnectionStrings["DefaultCloudStage"].ConnectionString;
-                case "test":
+                case "vorba":
                     return ConfigurationManager.ConnectionStrings["DefaultLocalDev"].ConnectionString;
+                case "ip-0AB73585":
+                    return ConfigurationManager.ConnectionStrings["DefaultCloudStage"].ConnectionString;
                 default:
                     return ConfigurationManager.ConnectionStrings["DefaultCloudStage"].ConnectionString;
             }

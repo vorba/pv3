@@ -13,7 +13,7 @@ namespace Purevision.Web.DataContexts
     public partial class PurevisionDb : DbContext
     {
         public PurevisionDb()
-            : base()
+            : base("name=DefaultCloudStage")
         {
             Database.Connection.ConnectionString = ConnectionStringHelpers.GetHostBasedConnectionString();
         }
