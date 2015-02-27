@@ -12,8 +12,6 @@
     <h3>Telerik UI for ASP.NET MVC PanelBar</h3>
     <br />
     
-    Hosted by: @ViewBag.HostName
-
     @(Html.Kendo().PanelBar()
         .Name("IntroPanelBar")
         .Items(items =>
@@ -40,12 +38,23 @@
                 .Text("Web Hosting")
                 .Content(@<text>
                     <p style="padding:0 1em; padding-top: 0.7em">
-                        You can easily find a web hosting company that offers the right 
+                        You can easily find a web hosting company that offers the right
                         mix of features and price for your applications.
-                    <a href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more…</a></p>
+                        <a href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more…</a>
+                    </p>
                 </text>);
+            items.Add()
+                .Text("System Info")
+                .Content(@<text>
+                    <div class="container">
+                        <p style="padding:0 1em; padding-top: 0.7em">
+                            Hosted by: @ViewBag.HostName<br />
+                            Connection: @ViewBag.ConnectionStringName
+                        </p>
+                    </div>
+                          </text>);
         })
-    )
+)
     
     
 </div>

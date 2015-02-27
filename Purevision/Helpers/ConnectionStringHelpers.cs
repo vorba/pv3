@@ -11,16 +11,25 @@ namespace Purevision.Web.Helpers
     {
         public static string GetHostBasedConnectionString()
         {
+            return GetConnectionStringByName(GetHostBasedConnectiongStringName());
+        }
+
+        public static string GetHostBasedConnectiongStringName()
+        {
             switch (System.Net.Dns.GetHostName())
             {
-                case "vorba":
-                    return ConfigurationManager.ConnectionStrings["DefaultLocalDev"].ConnectionString;
-                case "ip-0AB73585":
-                    return ConfigurationManager.ConnectionStrings["DefaultCloudStage"].ConnectionString;
+                case "vorba":       // Local Dev
+                    return "DefaultLocalDev";
+                case "ip-0AB73585": // AppHarbor
+                    return "DefaultCloudStage";
                 default:
-                    return ConfigurationManager.ConnectionStrings["DefaultCloudStage"].ConnectionString;
-            }
+                    return "DefaultCloudStage";
+            }           
+        }
 
+        public static string GetConnectionStringByName(string name)
+        {
+            return ConfigurationManager.ConnectionStrings[name].ConnectionString;
         }
     }
 }
