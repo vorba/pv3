@@ -45,13 +45,29 @@
                 </text>);
             items.Add()
                 .Text("System Info")
+                .Expanded(true)
                 .Content(@<text>
                     <div class="container">
                         <p style="padding:0 1em; padding-top: 0.7em">
-                            Hosted by: @ViewBag.HostName<br />
-                            Connection: @ViewBag.ConnectionStringName
+                            Host: @ViewBag.HostName (@ViewBag.ConnectionStringName)<br />
+                            <br />
+                            <a href="https://docs.google.com/a/adamcox.net/document/d/1ll5mkr0VZ2n_7wE198L5MWAPBA05LCVKoL8fgWMyeB0/edit?usp=sharing">
+                                Documentation</a><br />
+                            <br />
+                            Contributors:<br />
+                            <!--<a href="http://meta.stackoverflow.com/users/2250792/adam-cox">
+                                <img src="http://meta.stackoverflow.com/users/flair/2250792.png?theme=clean" width="208" height="58" alt="profile for Adam Cox at Meta Stack Overflow, Q&amp;A about the site for professional and enthusiast programmers" title="profile for Adam Cox at Meta Stack Overflow, Q&amp;A about the site for professional and enthusiast programmers">
+                            </a>-->
+                            <br/>
+                            <a href="http://meta.stackoverflow.com/users/2250792/adam-cox">
+                                <img src="http://www.gravatar.com/avatar/656443cfb3a31dc16ec6cd9b9551cc4a.png>" alt="Gravatar image for:  Adam Cox" title="Adam Cox" />
+                            </a>
+                            @*<a href="http://ca.linkedin.com/in/coachpalmer">
+                                <img src="https://media.licdn.com/mpr/mpr/shrink_400_400/p/3/005/078/386/1ec2648.jpg" width="114" height="114" alt="Gravatar image for:  Michael Palmer" title="Michael Palmer" />
+                            </a>*@
                         </p>
                     </div>
+
                           </text>);
         })
 )
