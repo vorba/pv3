@@ -14,9 +14,10 @@ namespace Purevision.Web.DataContexts
     {
         public IdentityDb()
 //            : base("Purevision2", throwIfV1Schema: false)
-            : base("DefaultCloudStage")
+            //: base("cloud")
+            : base(ConnectionStringHelpers.GetHostBasedConnectionString())
         {
-            Database.Connection.ConnectionString = ConnectionStringHelpers.GetHostBasedConnectionString();
+            //Database.Connection.ConnectionString = ConnectionStringHelpers.GetHostBasedConnectionString();
         }
 
         public static IdentityDb Create()

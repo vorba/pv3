@@ -18,12 +18,10 @@ namespace Purevision.Web.Helpers
         {
             switch (System.Net.Dns.GetHostName())
             {
-                case "vorba":       // Local Dev
-                    return "DefaultLocalDev";
-                case "ip-0AB73585": // AppHarbor
-                    return "DefaultCloudStage";
-                default:
-                    return "DefaultCloudStage";
+                case "vorba": return "local";       // Local Dev
+                case "ip-0AB73585": return "cloud"; // AppHarbor
+                default: return "cloud";
+                   
             }           
         }
 
