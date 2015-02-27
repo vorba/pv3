@@ -13,7 +13,7 @@ namespace Purevision.Web.DataContexts
     public partial class PurevisionDb : DbContext
     {
         public PurevisionDb()
-            : base("name=DefaultLocalDev")
+            : base()
         {
             Database.Connection.ConnectionString = ConnectionStringHelpers.GetHostBasedConnectionString();
         }

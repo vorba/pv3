@@ -14,7 +14,7 @@ namespace Purevision.Web.DataContexts
     {
         public IdentityDb()
 //            : base("Purevision2", throwIfV1Schema: false)
-            : base("DefaultLocalDev")
+            : base()
         {
             Database.Connection.ConnectionString = ConnectionStringHelpers.GetHostBasedConnectionString();
         }
